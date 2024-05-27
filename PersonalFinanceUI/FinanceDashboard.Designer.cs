@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FinanceDashboard));
             GroceriesSpendingPowerValue = new TextBox();
             GasSpendingPowerValue = new TextBox();
             dateUpdatedValue = new TextBox();
@@ -52,6 +53,7 @@
             GroceriesSpendingPowerValue.Location = new Point(471, 295);
             GroceriesSpendingPowerValue.Margin = new Padding(5);
             GroceriesSpendingPowerValue.Name = "GroceriesSpendingPowerValue";
+            GroceriesSpendingPowerValue.ReadOnly = true;
             GroceriesSpendingPowerValue.Size = new Size(157, 35);
             GroceriesSpendingPowerValue.TabIndex = 1;
             // 
@@ -64,6 +66,7 @@
             GasSpendingPowerValue.Location = new Point(471, 247);
             GasSpendingPowerValue.Margin = new Padding(5);
             GasSpendingPowerValue.Name = "GasSpendingPowerValue";
+            GasSpendingPowerValue.ReadOnly = true;
             GasSpendingPowerValue.Size = new Size(157, 35);
             GasSpendingPowerValue.TabIndex = 2;
             // 
@@ -76,6 +79,7 @@
             dateUpdatedValue.Location = new Point(471, 151);
             dateUpdatedValue.Margin = new Padding(5);
             dateUpdatedValue.Name = "dateUpdatedValue";
+            dateUpdatedValue.ReadOnly = true;
             dateUpdatedValue.Size = new Size(157, 35);
             dateUpdatedValue.TabIndex = 3;
             // 
@@ -88,6 +92,7 @@
             TotalSpendingPowerValue.Location = new Point(471, 199);
             TotalSpendingPowerValue.Margin = new Padding(5);
             TotalSpendingPowerValue.Name = "TotalSpendingPowerValue";
+            TotalSpendingPowerValue.ReadOnly = true;
             TotalSpendingPowerValue.Size = new Size(157, 35);
             TotalSpendingPowerValue.TabIndex = 4;
             // 
@@ -166,6 +171,7 @@
             TotalBillsPerMonthValue.Location = new Point(471, 343);
             TotalBillsPerMonthValue.Margin = new Padding(5);
             TotalBillsPerMonthValue.Name = "TotalBillsPerMonthValue";
+            TotalBillsPerMonthValue.ReadOnly = true;
             TotalBillsPerMonthValue.Size = new Size(157, 35);
             TotalBillsPerMonthValue.TabIndex = 10;
             // 
@@ -219,6 +225,7 @@
             Controls.Add(GasSpendingPowerValue);
             Controls.Add(GroceriesSpendingPowerValue);
             Font = new Font("Microsoft JhengHei UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(5);
             Name = "FinanceDashboard";
             Text = "Dashboard";

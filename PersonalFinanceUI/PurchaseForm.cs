@@ -73,7 +73,7 @@ namespace PersonalFinanceUI
                 return;
             }
 
-            if (creditCardDropdown == null || creditCardDropdown.SelectedIndex == 0)
+            if (creditCardDropdown == null)
             {
                 MessageBox.Show("Please select a valid credit card.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

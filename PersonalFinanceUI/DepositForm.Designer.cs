@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DepositForm));
             depositAmountLabel = new Label();
             depositFormTitle = new Label();
             createDepositButton = new Button();
@@ -163,6 +164,7 @@
             Controls.Add(depositFormTitle);
             Controls.Add(depositAmountValue);
             Font = new Font("Microsoft JhengHei UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(5);
             Name = "DepositForm";
             Text = "Deposit Form";

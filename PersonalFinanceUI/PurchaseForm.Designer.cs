@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PurchaseForm));
             creditCardDropdown = new ComboBox();
             creditCardLabel = new Label();
             purchaseFormTitle = new Label();
@@ -205,6 +206,7 @@
             Controls.Add(purchaseFormTitle);
             Controls.Add(creditCardDropdown);
             Font = new Font("Microsoft JhengHei UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(5);
             Name = "PurchaseForm";
             Text = "Purchase Form";

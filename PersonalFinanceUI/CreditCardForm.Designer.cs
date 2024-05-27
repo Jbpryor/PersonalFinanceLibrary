@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreditCardForm));
             AddCardButton = new Button();
             nameLabel = new Label();
             CreditCardTitle = new Label();
@@ -145,11 +146,12 @@
             // 
             creditCardDropdown.BackColor = Color.FromArgb(65, 65, 65);
             creditCardDropdown.FlatStyle = FlatStyle.Flat;
+            creditCardDropdown.Font = new Font("Microsoft JhengHei UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             creditCardDropdown.ForeColor = Color.White;
             creditCardDropdown.FormattingEnabled = true;
             creditCardDropdown.Location = new Point(186, 43);
             creditCardDropdown.Name = "creditCardDropdown";
-            creditCardDropdown.Size = new Size(218, 36);
+            creditCardDropdown.Size = new Size(218, 34);
             creditCardDropdown.TabIndex = 22;
             creditCardDropdown.SelectedIndexChanged += creditCardDropdown_SelectedIndexChanged;
             // 
@@ -299,6 +301,7 @@
             Controls.Add(CreditCardTitle);
             Font = new Font("Microsoft YaHei UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ForeColor = Color.White;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(6);
             Name = "CreditCardForm";
             Text = "Credit Card Form";
