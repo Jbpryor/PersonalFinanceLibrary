@@ -16,8 +16,7 @@ namespace PersonalFinanceUI
     {
         List<CreditCardModel> creditCards = [];
         CreditCardModel selectedCard = new();
-        CreditCardModel selectedPaymentCard = new();
-        CreditCardModel selectedRefundCard = new();
+
         public CreditCardForm()
         {
             InitializeComponent();
@@ -47,13 +46,13 @@ namespace PersonalFinanceUI
             paymentDropdown.DataSource = new List<CreditCardModel>(creditCards);
             paymentDropdown.DisplayMember = "CardName";
             paymentDropdown.ValueMember = "Id";
-            paymentDropdown.SelectedValue = selectedPaymentCard;
+            paymentDropdown.SelectedValue = selectedCard;
             
             refundDropdown.DataSource = null;
             refundDropdown.DataSource = new List<CreditCardModel>(creditCards);
             refundDropdown.DisplayMember = "CardName";
             refundDropdown.ValueMember = "Id";
-            refundDropdown.SelectedValue = selectedRefundCard;
+            refundDropdown.SelectedValue = selectedCard;
         }
 
         private void IsVisible(bool isVisible)
@@ -134,7 +133,7 @@ namespace PersonalFinanceUI
 
         private void paymentDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectedPaymentCard = (CreditCardModel)paymentDropdown.SelectedItem;
+            selectedCard = (CreditCardModel)paymentDropdown.SelectedItem;
         }
 
         private void paymentButton_Click(object sender, EventArgs e)
@@ -157,12 +156,12 @@ namespace PersonalFinanceUI
                 Name = "Credit Card Payment",
                 CategoryId = 5,
                 Amount = amount,
-                CreditCardId = selectedPaymentCard.Id
+                CreditCardId = selectedCard.Id
             };
 
             GlobalConfig.Connection?.CreatePurchase(payment);
 
-            MessageBox.Show($"Payment was created for {selectedPaymentCard.CardName}.", "Payment Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Payment was created for {selectedCard.CardName}.", "Payment Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void addRefundButton_Click(object sender, EventArgs e)
@@ -185,17 +184,17 @@ namespace PersonalFinanceUI
                 Name = "Credit Card Refund",
                 CategoryId = 6,
                 Amount = amount,
-                CreditCardId = selectedPaymentCard.Id
+                CreditCardId = selectedCard.Id
             };
 
             GlobalConfig.Connection?.CreatePurchase(payment);
 
-            MessageBox.Show($"Refund was created for {selectedPaymentCard.CardName}.", "Payment Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Refund was created for {selectedCard.CardName}.", "Payment Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void refundCardDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectedRefundCard = (CreditCardModel)refundDropdown.SelectedItem;
+            selectedCard = (CreditCardModel)refundDropdown.SelectedItem;
         }
     }
 }
