@@ -17,7 +17,7 @@ namespace PersonalFinanceLibrary
 
             foreach (PurchaseModel purchase in card.Purchases)
             {
-                if (purchase.CategoryId != 5)
+                if (purchase.CategoryId != 5 && purchase.CategoryId != 6)
                 {
                     balance += purchase.Amount;
                 }
