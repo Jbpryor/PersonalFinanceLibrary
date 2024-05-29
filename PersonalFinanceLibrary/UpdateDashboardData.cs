@@ -38,10 +38,6 @@ namespace PersonalFinanceLibrary
             {
                 dashboard.TotalBalance += deposit.Amount;
             }
-            if (deposit.CategoryId == 6)
-            {
-
-            }
 
             decimal HandlePaycheckDeposit(decimal checkAmount)
             {
@@ -92,17 +88,25 @@ namespace PersonalFinanceLibrary
 
             BillsModel bills = ExcelProcessor.ConvertToBillsModel(ExcelProcessor.FullFilePath(GlobalConfig.ExcelFile));
 
+            // Gas Purchase
             if (purchase.CategoryId == 1)
             {
                 dashboard.GasBalance -= purchase.Amount;
             }
+            // Grocery Purchase
             if (purchase.CategoryId == 2) 
             {
                 dashboard.GroceriesBalance -= purchase.Amount;
             }
+            // Other Purchase
             if (purchase.CategoryId == 3) 
             {
                 dashboard.TotalBalance -= purchase.Amount;
+            }
+            // Credit Card Refund
+            if (purchase.CategoryId == 6)
+            {
+                dashboard.TotalBalance += purchase.Amount;
             }
 
             //decimal previousBillsTotal = dashboard.BillsTotal;

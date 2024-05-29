@@ -134,14 +134,14 @@ namespace PersonalFinanceUI
         {
             if (paymentDropdown == null || paymentDropdown.SelectedIndex == 0)
             {
-                MessageBox.Show("Please select a valid credit card.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select a valid credit card for the Payment.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             bool amountValid = decimal.TryParse(paymentAmountValue.Text, out decimal amount);
 
             if (!amountValid)
             {
-                MessageBox.Show("Please enter a valid Amount for the current payment. Ex: 15.75", "Invalid Amount", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please enter a valid Amount for the current Payment. Ex: 15.75", "Invalid Amount", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -156,6 +156,34 @@ namespace PersonalFinanceUI
             GlobalConfig.Connection?.CreatePurchase(payment);
 
             MessageBox.Show($"Payment was created for {selectedPaymentCard.CardName}.", "Payment Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void addRefundButton_Click(object sender, EventArgs e)
+        {
+            if (refundCardDropdown == null || refundCardDropdown.SelectedIndex == 0)
+            {
+                MessageBox.Show("Please select a valid credit card for the Refund.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            bool amountValid = decimal.TryParse(refundAmountValue.Text, out decimal amount);
+
+            if (!amountValid)
+            {
+                MessageBox.Show("Please enter a valid Amount for the current Refund. Ex: 15.75", "Invalid Amount", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            PurchaseModel payment = new()
+            {
+                Name = "Credit Card Refund",
+                CategoryId = 6,
+                Amount = amount,
+                CreditCardId = selectedPaymentCard.Id
+            };
+
+            GlobalConfig.Connection?.CreatePurchase(payment);
+
+            MessageBox.Show($"Refund was created for {selectedPaymentCard.CardName}.", "Payment Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

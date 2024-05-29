@@ -21,7 +21,7 @@ namespace PersonalFinanceLibrary
                 {
                     balance += purchase.Amount;
                 }
-                if (purchase.CategoryId == 5)
+                if (purchase.CategoryId == 5 || purchase.CategoryId == 6)
                 {
                     balance -= purchase.Amount;
                 }                

@@ -45,11 +45,18 @@
             paymentAmountLabel = new Label();
             paymentButton = new Button();
             paymentDropdown = new ComboBox();
-            label1 = new Label();
+            paymentCardLabel = new Label();
             createPurchaseLink = new LinkLabel();
+            refundCardBox = new GroupBox();
+            refundAmountValue = new TextBox();
+            refundAmountLabel = new Label();
+            addRefundButton = new Button();
+            refundCardDropdown = new ComboBox();
+            refundCardLabel = new Label();
             newCardGroup.SuspendLayout();
             removeCardBox.SuspendLayout();
             cardPaymentBox.SuspendLayout();
+            refundCardBox.SuspendLayout();
             SuspendLayout();
             // 
             // AddCardButton
@@ -118,7 +125,7 @@
             viewAllPurchasesLink.ActiveLinkColor = Color.ForestGreen;
             viewAllPurchasesLink.AutoSize = true;
             viewAllPurchasesLink.LinkColor = Color.Lime;
-            viewAllPurchasesLink.Location = new Point(383, 469);
+            viewAllPurchasesLink.Location = new Point(383, 522);
             viewAllPurchasesLink.Name = "viewAllPurchasesLink";
             viewAllPurchasesLink.Size = new Size(202, 28);
             viewAllPurchasesLink.TabIndex = 18;
@@ -160,7 +167,7 @@
             dashboardLink.ActiveLinkColor = Color.ForestGreen;
             dashboardLink.AutoSize = true;
             dashboardLink.LinkColor = Color.Lime;
-            dashboardLink.Location = new Point(710, 469);
+            dashboardLink.Location = new Point(710, 522);
             dashboardLink.Name = "dashboardLink";
             dashboardLink.Size = new Size(122, 28);
             dashboardLink.TabIndex = 24;
@@ -175,7 +182,7 @@
             newCardGroup.Controls.Add(nameLabel);
             newCardGroup.FlatStyle = FlatStyle.Flat;
             newCardGroup.ForeColor = Color.ForestGreen;
-            newCardGroup.Location = new Point(23, 80);
+            newCardGroup.Location = new Point(24, 80);
             newCardGroup.Name = "newCardGroup";
             newCardGroup.Size = new Size(418, 147);
             newCardGroup.TabIndex = 25;
@@ -189,7 +196,7 @@
             removeCardBox.Controls.Add(creditCardLabel);
             removeCardBox.FlatStyle = FlatStyle.Flat;
             removeCardBox.ForeColor = Color.ForestGreen;
-            removeCardBox.Location = new Point(23, 293);
+            removeCardBox.Location = new Point(472, 80);
             removeCardBox.Name = "removeCardBox";
             removeCardBox.Size = new Size(418, 148);
             removeCardBox.TabIndex = 26;
@@ -202,9 +209,9 @@
             cardPaymentBox.Controls.Add(paymentAmountLabel);
             cardPaymentBox.Controls.Add(paymentButton);
             cardPaymentBox.Controls.Add(paymentDropdown);
-            cardPaymentBox.Controls.Add(label1);
+            cardPaymentBox.Controls.Add(paymentCardLabel);
             cardPaymentBox.ForeColor = Color.ForestGreen;
-            cardPaymentBox.Location = new Point(469, 149);
+            cardPaymentBox.Location = new Point(24, 266);
             cardPaymentBox.Name = "cardPaymentBox";
             cardPaymentBox.Size = new Size(418, 214);
             cardPaymentBox.TabIndex = 27;
@@ -262,23 +269,23 @@
             paymentDropdown.TabIndex = 25;
             paymentDropdown.SelectedIndexChanged += paymentDropdown_SelectedIndexChanged;
             // 
-            // label1
+            // paymentCardLabel
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Microsoft JhengHei UI", 20.25F);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(14, 43);
-            label1.Name = "label1";
-            label1.Size = new Size(159, 35);
-            label1.TabIndex = 23;
-            label1.Text = "Credit Card";
+            paymentCardLabel.AutoSize = true;
+            paymentCardLabel.Font = new Font("Microsoft JhengHei UI", 20.25F);
+            paymentCardLabel.ForeColor = Color.White;
+            paymentCardLabel.Location = new Point(14, 43);
+            paymentCardLabel.Name = "paymentCardLabel";
+            paymentCardLabel.Size = new Size(159, 35);
+            paymentCardLabel.TabIndex = 23;
+            paymentCardLabel.Text = "Credit Card";
             // 
             // createPurchaseLink
             // 
             createPurchaseLink.ActiveLinkColor = Color.ForestGreen;
             createPurchaseLink.AutoSize = true;
             createPurchaseLink.LinkColor = Color.Lime;
-            createPurchaseLink.Location = new Point(82, 469);
+            createPurchaseLink.Location = new Point(82, 522);
             createPurchaseLink.Name = "createPurchaseLink";
             createPurchaseLink.Size = new Size(176, 28);
             createPurchaseLink.TabIndex = 28;
@@ -286,12 +293,89 @@
             createPurchaseLink.Text = "Create Purchase";
             createPurchaseLink.LinkClicked += createPurchaseLink_LinkClicked;
             // 
+            // refundCardBox
+            // 
+            refundCardBox.Controls.Add(refundAmountValue);
+            refundCardBox.Controls.Add(refundAmountLabel);
+            refundCardBox.Controls.Add(addRefundButton);
+            refundCardBox.Controls.Add(refundCardDropdown);
+            refundCardBox.Controls.Add(refundCardLabel);
+            refundCardBox.ForeColor = Color.ForestGreen;
+            refundCardBox.Location = new Point(472, 266);
+            refundCardBox.Name = "refundCardBox";
+            refundCardBox.Size = new Size(418, 214);
+            refundCardBox.TabIndex = 28;
+            refundCardBox.TabStop = false;
+            refundCardBox.Text = "Card Refund";
+            // 
+            // refundAmountValue
+            // 
+            refundAmountValue.BackColor = Color.FromArgb(65, 65, 65);
+            refundAmountValue.BorderStyle = BorderStyle.None;
+            refundAmountValue.Font = new Font("Microsoft JhengHei UI", 20.25F);
+            refundAmountValue.ForeColor = Color.White;
+            refundAmountValue.Location = new Point(185, 94);
+            refundAmountValue.Margin = new Padding(5);
+            refundAmountValue.Name = "refundAmountValue";
+            refundAmountValue.Size = new Size(218, 35);
+            refundAmountValue.TabIndex = 26;
+            // 
+            // refundAmountLabel
+            // 
+            refundAmountLabel.AutoSize = true;
+            refundAmountLabel.Font = new Font("Microsoft JhengHei UI", 20.25F);
+            refundAmountLabel.ForeColor = Color.White;
+            refundAmountLabel.Location = new Point(14, 94);
+            refundAmountLabel.Name = "refundAmountLabel";
+            refundAmountLabel.Size = new Size(118, 35);
+            refundAmountLabel.TabIndex = 27;
+            refundAmountLabel.Text = "Amount";
+            // 
+            // addRefundButton
+            // 
+            addRefundButton.BackColor = Color.Lime;
+            addRefundButton.FlatAppearance.BorderColor = Color.Black;
+            addRefundButton.FlatAppearance.MouseDownBackColor = Color.Green;
+            addRefundButton.FlatAppearance.MouseOverBackColor = Color.LimeGreen;
+            addRefundButton.FlatStyle = FlatStyle.Flat;
+            addRefundButton.ForeColor = Color.Black;
+            addRefundButton.Location = new Point(125, 158);
+            addRefundButton.Name = "addRefundButton";
+            addRefundButton.Size = new Size(169, 36);
+            addRefundButton.TabIndex = 24;
+            addRefundButton.Text = "Add Refund";
+            addRefundButton.UseVisualStyleBackColor = false;
+            addRefundButton.Click += addRefundButton_Click;
+            // 
+            // refundCardDropdown
+            // 
+            refundCardDropdown.BackColor = Color.FromArgb(65, 65, 65);
+            refundCardDropdown.FlatStyle = FlatStyle.Flat;
+            refundCardDropdown.ForeColor = Color.White;
+            refundCardDropdown.FormattingEnabled = true;
+            refundCardDropdown.Location = new Point(186, 42);
+            refundCardDropdown.Name = "refundCardDropdown";
+            refundCardDropdown.Size = new Size(218, 36);
+            refundCardDropdown.TabIndex = 25;
+            // 
+            // refundCardLabel
+            // 
+            refundCardLabel.AutoSize = true;
+            refundCardLabel.Font = new Font("Microsoft JhengHei UI", 20.25F);
+            refundCardLabel.ForeColor = Color.White;
+            refundCardLabel.Location = new Point(14, 43);
+            refundCardLabel.Name = "refundCardLabel";
+            refundCardLabel.Size = new Size(159, 35);
+            refundCardLabel.TabIndex = 23;
+            refundCardLabel.Text = "Credit Card";
+            // 
             // CreditCardForm
             // 
             AutoScaleDimensions = new SizeF(13F, 28F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(35, 35, 35);
-            ClientSize = new Size(915, 521);
+            ClientSize = new Size(915, 587);
+            Controls.Add(refundCardBox);
             Controls.Add(createPurchaseLink);
             Controls.Add(cardPaymentBox);
             Controls.Add(removeCardBox);
@@ -311,6 +395,8 @@
             removeCardBox.PerformLayout();
             cardPaymentBox.ResumeLayout(false);
             cardPaymentBox.PerformLayout();
+            refundCardBox.ResumeLayout(false);
+            refundCardBox.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -333,7 +419,13 @@
         private Label paymentAmountLabel;
         private Button paymentButton;
         private ComboBox paymentDropdown;
-        private Label label1;
+        private Label paymentCardLabel;
         private LinkLabel createPurchaseLink;
+        private GroupBox refundCardBox;
+        private TextBox refundAmountValue;
+        private Label refundAmountLabel;
+        private Button addRefundButton;
+        private ComboBox refundCardDropdown;
+        private Label refundCardLabel;
     }
 }
