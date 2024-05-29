@@ -51,7 +51,7 @@
             refundAmountValue = new TextBox();
             refundAmountLabel = new Label();
             addRefundButton = new Button();
-            refundCardDropdown = new ComboBox();
+            refundDropdown = new ComboBox();
             refundCardLabel = new Label();
             newCardGroup.SuspendLayout();
             removeCardBox.SuspendLayout();
@@ -298,7 +298,7 @@
             refundCardBox.Controls.Add(refundAmountValue);
             refundCardBox.Controls.Add(refundAmountLabel);
             refundCardBox.Controls.Add(addRefundButton);
-            refundCardBox.Controls.Add(refundCardDropdown);
+            refundCardBox.Controls.Add(refundDropdown);
             refundCardBox.Controls.Add(refundCardLabel);
             refundCardBox.ForeColor = Color.ForestGreen;
             refundCardBox.Location = new Point(472, 266);
@@ -347,16 +347,17 @@
             addRefundButton.UseVisualStyleBackColor = false;
             addRefundButton.Click += addRefundButton_Click;
             // 
-            // refundCardDropdown
+            // refundDropdown
             // 
-            refundCardDropdown.BackColor = Color.FromArgb(65, 65, 65);
-            refundCardDropdown.FlatStyle = FlatStyle.Flat;
-            refundCardDropdown.ForeColor = Color.White;
-            refundCardDropdown.FormattingEnabled = true;
-            refundCardDropdown.Location = new Point(186, 42);
-            refundCardDropdown.Name = "refundCardDropdown";
-            refundCardDropdown.Size = new Size(218, 36);
-            refundCardDropdown.TabIndex = 25;
+            refundDropdown.BackColor = Color.FromArgb(65, 65, 65);
+            refundDropdown.FlatStyle = FlatStyle.Flat;
+            refundDropdown.ForeColor = Color.White;
+            refundDropdown.FormattingEnabled = true;
+            refundDropdown.Location = new Point(186, 42);
+            refundDropdown.Name = "refundDropdown";
+            refundDropdown.Size = new Size(218, 36);
+            refundDropdown.TabIndex = 25;
+            refundDropdown.SelectedIndexChanged += refundCardDropdown_SelectedIndexChanged;
             // 
             // refundCardLabel
             // 
@@ -425,7 +426,7 @@
         private TextBox refundAmountValue;
         private Label refundAmountLabel;
         private Button addRefundButton;
-        private ComboBox refundCardDropdown;
+        private ComboBox refundDropdown;
         private Label refundCardLabel;
     }
 }

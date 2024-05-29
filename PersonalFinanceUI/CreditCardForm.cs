@@ -17,6 +17,7 @@ namespace PersonalFinanceUI
         List<CreditCardModel> creditCards = [];
         CreditCardModel selectedCard = new();
         CreditCardModel selectedPaymentCard = new();
+        CreditCardModel selectedRefundCard = new();
         public CreditCardForm()
         {
             InitializeComponent();
@@ -37,16 +38,22 @@ namespace PersonalFinanceUI
             IsVisible(true);
             creditCards = [.. creditCards.OrderBy(card => card.Id)];
             creditCardDropdown.DataSource = null;
-            creditCardDropdown.DataSource = creditCards;
+            creditCardDropdown.DataSource = new List<CreditCardModel>(creditCards);
             creditCardDropdown.DisplayMember = "CardName";
             creditCardDropdown.ValueMember = "Id";
             creditCardDropdown.SelectedValue = selectedCard;
 
             paymentDropdown.DataSource = null;
-            paymentDropdown.DataSource = creditCards;
+            paymentDropdown.DataSource = new List<CreditCardModel>(creditCards);
             paymentDropdown.DisplayMember = "CardName";
             paymentDropdown.ValueMember = "Id";
             paymentDropdown.SelectedValue = selectedPaymentCard;
+            
+            refundDropdown.DataSource = null;
+            refundDropdown.DataSource = new List<CreditCardModel>(creditCards);
+            refundDropdown.DisplayMember = "CardName";
+            refundDropdown.ValueMember = "Id";
+            refundDropdown.SelectedValue = selectedRefundCard;
         }
 
         private void IsVisible(bool isVisible)
@@ -160,7 +167,7 @@ namespace PersonalFinanceUI
 
         private void addRefundButton_Click(object sender, EventArgs e)
         {
-            if (refundCardDropdown == null || refundCardDropdown.SelectedIndex == 0)
+            if (refundDropdown == null || refundDropdown.SelectedIndex == 0)
             {
                 MessageBox.Show("Please select a valid credit card for the Refund.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -184,6 +191,11 @@ namespace PersonalFinanceUI
             GlobalConfig.Connection?.CreatePurchase(payment);
 
             MessageBox.Show($"Refund was created for {selectedPaymentCard.CardName}.", "Payment Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void refundCardDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedRefundCard = (CreditCardModel)refundDropdown.SelectedItem;
         }
     }
 }
