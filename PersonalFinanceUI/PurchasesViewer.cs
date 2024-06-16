@@ -29,9 +29,8 @@ namespace PersonalFinanceUI
 
         private void PopulateCreditCardList()
         {
-            creditCards = [.. GlobalConfig.Connection?.CreditCards_GetAll()];
+            creditCards = [.. GlobalConfig.Connection?.CreditCards_GetAll().OrderByDescending(card => card.Id)];
 
-            creditCards = [.. creditCards.OrderByDescending(card => card.Id)];
             creditCardDropdown.DataSource = null;
             creditCardDropdown.DataSource = creditCards;
             creditCardDropdown.DisplayMember = "CardName";

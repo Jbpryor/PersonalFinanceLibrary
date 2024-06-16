@@ -35,6 +35,7 @@ namespace PersonalFinanceUI
             categories.Add(new CategoryModel { Id = 3, Name = "Other" });
             categories.Add(new CategoryModel { Id = 4, Name = "Update Card Balance" });
             categories.Add(new CategoryModel { Id = 7, Name = "Pet" });
+            categories.Add(new CategoryModel { Id = 8, Name = "Car Insurance" });
 
             categories = [.. categories.OrderBy(category => category.Name)];
 
