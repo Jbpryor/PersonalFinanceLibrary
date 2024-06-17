@@ -30,14 +30,7 @@ namespace PersonalFinanceUI
 
         private void PopulateCategoryList()
         {
-            categories.Add(new CategoryModel { Id = 1, Name = "Gas" });
-            categories.Add(new CategoryModel { Id = 2, Name = "Groceries" });
-            categories.Add(new CategoryModel { Id = 3, Name = "Other" });
-            categories.Add(new CategoryModel { Id = 4, Name = "Update Card Balance" });
-            categories.Add(new CategoryModel { Id = 7, Name = "Pet" });
-            categories.Add(new CategoryModel { Id = 8, Name = "Car Insurance" });
-
-            categories = [.. categories.OrderBy(category => category.Name)];
+            categories = [.. CategoryModel.Categories().OrderBy(category => category.Name)];
 
             purchaseCategoryDropdown.DataSource = null;
             purchaseCategoryDropdown.DataSource = categories;
