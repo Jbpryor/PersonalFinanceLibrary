@@ -14,5 +14,12 @@ namespace PersonalFinanceLibrary.Models
         public int CategoryId { get; set; }
         public decimal Amount { get; set; }
         public int CreditCardId { get; set; }
+        public string? CategoryName
+        {
+            get
+            {
+                return CategoryModel.GetCategoryNameById(CategoryId);
+            }
+        }
     }
 }

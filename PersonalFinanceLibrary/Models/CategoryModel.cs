@@ -19,20 +19,21 @@ namespace PersonalFinanceLibrary.Models
                 new CategoryModel { Id = 2, Name = "Groceries" },
                 new CategoryModel { Id = 3, Name = "Other" },
                 new CategoryModel { Id = 4, Name = "Update Card Balance" },
+                new CategoryModel { Id = 6, Name = "Refund" },
                 new CategoryModel { Id = 7, Name = "Pet" },
                 new CategoryModel { Id = 8, Name = "Car Insurance" }
             };
         }
 
-        public static Dictionary<int, string> CategoryDictionary()
+        public static Dictionary<int, string?> CategoryDictionary()
         {
             return Categories().ToDictionary(category => category.Id, category => category.Name);
         }
 
-        public static string GetCategoryNameById(int categoryId)
+        public static string? GetCategoryNameById(int categoryId)
         {
             var categoryDictionary = CategoryDictionary();
-            return categoryDictionary.TryGetValue(categoryId, out string categoryName) ? categoryName : null;
+            return categoryDictionary.TryGetValue(categoryId, out string? categoryName) ? categoryName : null;
         }
     }
 }

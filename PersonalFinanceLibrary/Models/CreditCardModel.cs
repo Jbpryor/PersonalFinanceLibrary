@@ -11,6 +11,5 @@ namespace PersonalFinanceLibrary.Models
         public int Id { get; set; }
         public string? CardName { get; set; }
         public List<PurchaseModel> Purchases { get; set; } = [];
-
     }
 }
