@@ -12,7 +12,7 @@ namespace PersonalFinanceLibrary
     {
         public static void HandleDeposit(DepositModel deposit)
         {
-            DashboardModel dashboard = GlobalConfig.Connection.DashboardData_Get();
+            DashboardModel dashboard = GlobalConfig.Connection!.DashboardData_Get();
 
             BillsModel bills = ExcelProcessor.ConvertToBillsModel(ExcelProcessor.FullFilePath(GlobalConfig.ExcelFile));
 
@@ -84,19 +84,35 @@ namespace PersonalFinanceLibrary
 
         public static void HandlePurchase(PurchaseModel purchase)
         {
-            DashboardModel dashboard = GlobalConfig.Connection.DashboardData_Get();
+            DashboardModel dashboard = GlobalConfig.Connection!.DashboardData_Get();
 
             BillsModel bills = ExcelProcessor.ConvertToBillsModel(ExcelProcessor.FullFilePath(GlobalConfig.ExcelFile));
 
             // Gas Purchase
             if (purchase.CategoryId == 1)
             {
-                dashboard.GasBalance -= purchase.Amount;
+                if (purchase.Amount > dashboard.GasBalance)
+                {
+                    dashboard.GasBalance = 0;
+                    dashboard.TotalBalance -= (purchase.Amount - 125);
+                }
+                else
+                {
+                    dashboard.GasBalance -= purchase.Amount;
+                }
             }
             // Grocery Purchase
             if (purchase.CategoryId == 2) 
             {
-                dashboard.GroceriesBalance -= purchase.Amount;
+                if (purchase.Amount > dashboard.GroceriesBalance)
+                {
+                    dashboard.GroceriesBalance = 0;
+                    dashboard.TotalBalance -= (purchase.Amount - 125);
+                }
+                else
+                {
+                    dashboard.GroceriesBalance -= purchase.Amount;
+                }            
             }
             // Other Purchase
             if (purchase.CategoryId == 3) 
