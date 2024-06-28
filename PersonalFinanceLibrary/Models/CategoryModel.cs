@@ -21,7 +21,8 @@ namespace PersonalFinanceLibrary.Models
                 new CategoryModel { Id = 4, Name = "Update Card Balance" },
                 new CategoryModel { Id = 6, Name = "Refund" },
                 new CategoryModel { Id = 7, Name = "Pet" },
-                new CategoryModel { Id = 8, Name = "Car Insurance" }
+                new CategoryModel { Id = 8, Name = "Car Insurance" },
+                new CategoryModel { Id = 9, Name = "Phone" },
             };
         }
 
