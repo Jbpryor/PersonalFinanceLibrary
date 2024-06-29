@@ -145,5 +145,18 @@ namespace PersonalFinanceLibrary
             //    }
             //}
         }
+        public static void InitializeData()
+        {
+            DashboardModel dashboard = GlobalConfig.Connection!.DashboardData_Get();
+
+            BillsModel bills = ExcelProcessor.ConvertToBillsModel(ExcelProcessor.FullFilePath(GlobalConfig.ExcelFile));
+
+            dashboard.BillsTotal = bills.BillsTotal;
+
+            dashboard.DateUpdated = DateTime.Now;
+
+            GlobalConfig.Connection.UpdateDashboard(dashboard);
+
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace PersonalFinanceUI
 
             ApplicationConfiguration.Initialize();
             PersonalFinanceLibrary.GlobalConfig.CreateConnection();
+            UpdateDashboardData.InitializeData();
             Application.Run(new FinanceDashboard());
         }
     }
