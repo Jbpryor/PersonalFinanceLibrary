@@ -85,7 +85,7 @@ namespace PersonalFinanceUI
 
         private void RemoveCardButton_Click(object sender, EventArgs e)
         {
-            if (creditCardDropdown.SelectedValue == null || creditCardDropdown.SelectedIndex == 0)
+            if (creditCardDropdown.SelectedValue == null)
             {
                 MessageBox.Show("Please select a Credit Card to remove.");
                 return;
@@ -138,7 +138,7 @@ namespace PersonalFinanceUI
 
         private void paymentButton_Click(object sender, EventArgs e)
         {
-            if (paymentDropdown == null || paymentDropdown.SelectedIndex == 0)
+            if (paymentDropdown == null)
             {
                 MessageBox.Show("Please select a valid credit card for the Payment.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
