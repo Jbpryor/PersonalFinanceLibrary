@@ -10,12 +10,27 @@ namespace PersonalFinanceLibrary
 {
     public class UpdateDashboardData
     {
+        private static DashboardModel dashboard;
+        private static BillsModel bills;
+
+        public static void InitializeData()
+        {
+            dashboard = GlobalConfig.Connection!.DashboardData_Get();
+
+            bills = ExcelProcessor.ConvertToBillsModel(ExcelProcessor.FullFilePath(GlobalConfig.ExcelFile));
+
+            if (dashboard.BillsTotal != bills.BillsTotal)
+            {
+                dashboard.BillsTotal = bills.BillsTotal;
+
+                dashboard.DateUpdated = DateTime.Now;
+
+                GlobalConfig.Connection.UpdateDashboard(dashboard);
+            }
+        }
+
         public static void HandleDeposit(DepositModel deposit)
         {
-            DashboardModel dashboard = GlobalConfig.Connection!.DashboardData_Get();
-
-            BillsModel bills = ExcelProcessor.ConvertToBillsModel(ExcelProcessor.FullFilePath(GlobalConfig.ExcelFile));
-
             if (deposit.CategoryId == 1)
             {
                 dashboard.TotalBalance += deposit.Amount;
@@ -84,10 +99,6 @@ namespace PersonalFinanceLibrary
 
         public static void HandlePurchase(PurchaseModel purchase)
         {
-            DashboardModel dashboard = GlobalConfig.Connection!.DashboardData_Get();
-
-            BillsModel bills = ExcelProcessor.ConvertToBillsModel(ExcelProcessor.FullFilePath(GlobalConfig.ExcelFile));
-
             // Gas Purchase
             if (purchase.CategoryId == 1)
             {
@@ -145,18 +156,6 @@ namespace PersonalFinanceLibrary
             //    }
             //}
         }
-        public static void InitializeData()
-        {
-            DashboardModel dashboard = GlobalConfig.Connection!.DashboardData_Get();
 
-            BillsModel bills = ExcelProcessor.ConvertToBillsModel(ExcelProcessor.FullFilePath(GlobalConfig.ExcelFile));
-
-            dashboard.BillsTotal = bills.BillsTotal;
-
-            dashboard.DateUpdated = DateTime.Now;
-
-            GlobalConfig.Connection.UpdateDashboard(dashboard);
-
-        }
     }
 }
