@@ -24,9 +24,9 @@ namespace PersonalFinanceUI
             PopulateCreditCardList();
         }
 
-        private void PopulateCreditCardList()
+        private async void PopulateCreditCardList()
         {
-            creditCards = [.. GlobalConfig.Connection?.CreditCards_GetAll()];
+            creditCards = [.. await(GlobalConfig.Connection!.CreditCards_GetAll())];
 
             if (creditCards.Count == 0)
             {
@@ -61,7 +61,7 @@ namespace PersonalFinanceUI
             cardPaymentBox.Visible = isVisible;
         }
 
-        private void AddCardButton_Click(object sender, EventArgs e)
+        private async void AddCardButton_Click(object sender, EventArgs e)
         {
             if (creditCardNameValue.Text.Length == 0)
             {
@@ -74,7 +74,7 @@ namespace PersonalFinanceUI
                 CardName = creditCardNameValue.Text
             };
 
-            GlobalConfig.Connection?.CreateCreditCard(card);
+            await GlobalConfig.Connection!.CreateCreditCard(card);
 
             MessageBox.Show($"New Credit Card {creditCardNameValue.Text} added!");
 
@@ -83,7 +83,7 @@ namespace PersonalFinanceUI
             PopulateCreditCardList();
         }
 
-        private void RemoveCardButton_Click(object sender, EventArgs e)
+        private async void RemoveCardButton_Click(object sender, EventArgs e)
         {
             if (creditCardDropdown.SelectedValue == null)
             {
@@ -101,7 +101,8 @@ namespace PersonalFinanceUI
             var confirmResult = MessageBox.Show("Are you sure you want to delete this credit card?", "Confirm Delete", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
             {
-                GlobalConfig.Connection?.DeleteCreditCard(card);
+                await GlobalConfig.Connection!.DeleteCreditCard(card);
+                PopulateCreditCardList();
             }
         }
 
@@ -136,7 +137,7 @@ namespace PersonalFinanceUI
             selectedCard = (CreditCardModel)paymentDropdown.SelectedItem;
         }
 
-        private void paymentButton_Click(object sender, EventArgs e)
+        private async void paymentButton_Click(object sender, EventArgs e)
         {
             if (paymentDropdown == null)
             {
@@ -159,12 +160,12 @@ namespace PersonalFinanceUI
                 CreditCardId = selectedCard.Id
             };
 
-            GlobalConfig.Connection?.CreatePurchase(payment);
+            await GlobalConfig.Connection!.CreatePurchase(payment);
 
             MessageBox.Show($"Payment was created for {selectedCard.CardName}.", "Payment Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void addRefundButton_Click(object sender, EventArgs e)
+        private async void addRefundButton_Click(object sender, EventArgs e)
         {
             if (refundDropdown == null || refundDropdown.SelectedIndex == 0)
             {
@@ -187,7 +188,7 @@ namespace PersonalFinanceUI
                 CreditCardId = selectedCard.Id
             };
 
-            GlobalConfig.Connection?.CreatePurchase(payment);
+            await GlobalConfig.Connection!.CreatePurchase(payment);
 
             MessageBox.Show($"Refund was created for {selectedCard.CardName}.", "Payment Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

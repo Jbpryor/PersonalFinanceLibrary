@@ -4,8 +4,7 @@ using PersonalFinanceLibrary;
 namespace PersonalFinanceUI
 {
     public partial class FinanceDashboard : Form
-    {
-        DashboardModel dashboard = GlobalConfig.Connection.DashboardData_Get();
+    {        
         public FinanceDashboard()
         {
             InitializeComponent();
@@ -13,8 +12,10 @@ namespace PersonalFinanceUI
             PopulateData();
         }
 
-        private void PopulateData()
+        private async void PopulateData()
         {
+            DashboardModel dashboard = await GlobalConfig.Connection!.DashboardData_Get();
+
             dateUpdatedValue.Text = dashboard.DateUpdated.ToString("MM/dd/yyyy");
             TotalSpendingPowerValue.Text = dashboard.TotalBalance.ToString("0.00");
             GasSpendingPowerValue.Text = dashboard.GasBalance.ToString("0.00");
@@ -29,9 +30,9 @@ namespace PersonalFinanceUI
             this.Hide();
         }
 
-        private void InputPurchasesButton_Click(object sender, EventArgs e)
+        private async void InputPurchasesButton_Click(object sender, EventArgs e)
         {
-            List<CreditCardModel> creditCards = [.. GlobalConfig.Connection?.CreditCards_GetAll()];
+            List<CreditCardModel> creditCards = [.. await(GlobalConfig.Connection!.CreditCards_GetAll())];
 
             if (creditCards.Count == 0)
             {

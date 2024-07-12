@@ -13,6 +13,13 @@ namespace PersonalFinanceLibrary.Models
         public string? Name { get; set; }
         public int CategoryId { get; set; }
         public decimal Amount { get; set; }
+        public string? CategoryName
+        {
+            get
+            {
+                return DepositCategoryModel.GetCategoryNameById(CategoryId);
+            }
+        }
 
     }
 

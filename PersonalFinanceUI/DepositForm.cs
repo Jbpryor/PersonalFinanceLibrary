@@ -31,7 +31,7 @@ namespace PersonalFinanceUI
             depositCategoryDropdown.ValueMember = "Id";
         }
 
-        private void createDepositButton_Click(object sender, EventArgs e)
+        private async void createDepositButton_Click(object sender, EventArgs e)
         {
 
             if (depositNameValue.Text.Length == 0)
@@ -61,7 +61,7 @@ namespace PersonalFinanceUI
                 Amount = amount
             };
 
-            GlobalConfig.Connection?.CreateDeposit(deposit);
+            await GlobalConfig.Connection!.CreateDeposit(deposit);
 
             FinanceDashboard dashboard = new();
             dashboard.Show();

@@ -13,9 +13,9 @@ namespace PersonalFinanceLibrary
         private static DashboardModel dashboard;
         private static BillsModel bills;
 
-        public static void InitializeData()
+        public async static void InitializeData()
         {
-            dashboard = GlobalConfig.Connection!.DashboardData_Get();
+            dashboard = await GlobalConfig.Connection!.DashboardData_Get();
 
             bills = ExcelProcessor.ConvertToBillsModel(ExcelProcessor.FullFilePath(GlobalConfig.ExcelFile));
 
@@ -25,11 +25,11 @@ namespace PersonalFinanceLibrary
 
                 dashboard.DateUpdated = DateTime.Now;
 
-                GlobalConfig.Connection.UpdateDashboard(dashboard);
+                await GlobalConfig.Connection.UpdateDashboard(dashboard);
             }
         }
 
-        public static void HandleDeposit(DepositModel deposit)
+        public async static void HandleDeposit(DepositModel deposit)
         {
             if (deposit.CategoryId == 1)
             {
@@ -94,10 +94,10 @@ namespace PersonalFinanceLibrary
 
             dashboard.DateUpdated = DateTime.Now;
 
-            GlobalConfig.Connection.UpdateDashboard(dashboard);
+            await GlobalConfig.Connection!.UpdateDashboard(dashboard);
         }
 
-        public static void HandlePurchase(PurchaseModel purchase)
+        public async static void HandlePurchase(PurchaseModel purchase)
         {
             // Gas Purchase
             if (purchase.CategoryId == 1)
@@ -142,7 +142,7 @@ namespace PersonalFinanceLibrary
 
             dashboard.DateUpdated = DateTime.Now;
 
-            GlobalConfig.Connection.UpdateDashboard(dashboard);
+            await GlobalConfig.Connection.UpdateDashboard(dashboard);
 
             //if (previousBillsTotal != dashboard.BillsTotal)
             //{

@@ -38,9 +38,9 @@ namespace PersonalFinanceUI
             purchaseCategoryDropdown.ValueMember = "Id";
         }
 
-        private void PopulateCreditCardList()
+        private async void PopulateCreditCardList()
         {
-            creditCards = [.. GlobalConfig.Connection?.CreditCards_GetAll()];
+            creditCards = [.. await(GlobalConfig.Connection!.CreditCards_GetAll())];
 
             creditCards = [.. creditCards.OrderByDescending(card => card.Id)];
             creditCardDropdown.DataSource = null;
@@ -60,7 +60,7 @@ namespace PersonalFinanceUI
             selectedCategory = (CategoryModel)purchaseCategoryDropdown.SelectedItem;
         }
 
-        private void createPurchaseButton_Click(object sender, EventArgs e)
+        private async void createPurchaseButton_Click(object sender, EventArgs e)
         {
             if (purchaseNameValue.Text.Length == 0)
             {
@@ -96,7 +96,7 @@ namespace PersonalFinanceUI
                 CreditCardId = selectedCard.Id
             };
 
-            GlobalConfig.Connection?.CreatePurchase(purchase);
+            await GlobalConfig.Connection!.CreatePurchase(purchase);
 
             FinanceDashboard dashboard = new();
             dashboard.Show();

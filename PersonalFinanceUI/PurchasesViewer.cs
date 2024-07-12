@@ -27,9 +27,9 @@ namespace PersonalFinanceUI
             PopulateTable();
         }
 
-        private void PopulateCreditCardList()
+        private async void PopulateCreditCardList()
         {
-            creditCards = [.. GlobalConfig.Connection?.CreditCards_GetAll().OrderByDescending(card => card.Id)];
+            creditCards = [.. (await GlobalConfig.Connection!.CreditCards_GetAll()).OrderByDescending(card => card.Id)];
 
             creditCardDropdown.DataSource = null;
             creditCardDropdown.DataSource = creditCards;

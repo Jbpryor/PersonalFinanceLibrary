@@ -9,14 +9,15 @@ namespace PersonalFinanceLibrary.DataAccess
 {
     public interface IDataConnection
     {
-        void CreateDeposit(DepositModel model);
-        void CreateCreditCard(CreditCardModel model);
-        void CreatePurchase(PurchaseModel model);
-        void DeleteCreditCard(CreditCardModel model);
-        void CreateDashboard(DashboardModel model);
-        void UpdateDashboard(DashboardModel model);
-        List<CreditCardModel> CreditCards_GetAll();
-        DashboardModel DashboardData_Get();
+        Task CreateDeposit(DepositModel model);
+        Task CreateCreditCard(CreditCardModel model);
+        Task CreatePurchase(PurchaseModel model);
+        Task DeleteCreditCard(CreditCardModel model);
+        Task CreateDashboard(DashboardModel model);
+        Task UpdateDashboard(DashboardModel model);
+        Task<List<CreditCardModel>> CreditCards_GetAll();
+        Task<DashboardModel> DashboardData_Get();
+        Task<List<DepositModel>> Deposits_GetAll();
     }
 
     // To populate the dashboard...
