@@ -30,7 +30,7 @@ namespace PersonalFinanceUI
 
         private void PopulateCategoryList()
         {
-            categories = [.. CategoryModel.Categories().OrderBy(category => category.Name)];
+            categories = [.. CategoryModel.Categories().Where(category => category.Id != 5 && category.Id != 6).OrderBy(category => category.Name)];
 
             purchaseCategoryDropdown.DataSource = null;
             purchaseCategoryDropdown.DataSource = categories;
