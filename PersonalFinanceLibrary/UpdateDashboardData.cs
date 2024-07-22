@@ -104,8 +104,8 @@ namespace PersonalFinanceLibrary
             {
                 if (purchase.Amount > dashboard.GasBalance)
                 {
+                    dashboard.TotalBalance -= (purchase.Amount - dashboard.GasBalance);
                     dashboard.GasBalance = 0;
-                    dashboard.TotalBalance -= (purchase.Amount - 125);
                 }
                 else
                 {
@@ -117,8 +117,8 @@ namespace PersonalFinanceLibrary
             {
                 if (purchase.Amount > dashboard.GroceriesBalance)
                 {
+                    dashboard.TotalBalance -= (purchase.Amount - dashboard.GroceriesBalance);
                     dashboard.GroceriesBalance = 0;
-                    dashboard.TotalBalance -= (purchase.Amount - 125);
                 }
                 else
                 {
@@ -142,7 +142,7 @@ namespace PersonalFinanceLibrary
 
             dashboard.DateUpdated = DateTime.Now;
 
-            await GlobalConfig.Connection.UpdateDashboard(dashboard);
+            await GlobalConfig.Connection!.UpdateDashboard(dashboard);
 
             //if (previousBillsTotal != dashboard.BillsTotal)
             //{
