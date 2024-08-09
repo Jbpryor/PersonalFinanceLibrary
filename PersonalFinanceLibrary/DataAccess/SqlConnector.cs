@@ -1,14 +1,7 @@
-﻿using ClosedXML.Excel;
-using Dapper;
-using DocumentFormat.OpenXml.Drawing.Charts;
+﻿using Dapper;
 using PersonalFinanceLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PersonalFinanceLibrary.DataAccess
 {
@@ -117,7 +110,7 @@ namespace PersonalFinanceLibrary.DataAccess
         {
             using IDbConnection connection = OpenConnection();
 
-            DashboardModel dashboard = await connection.QuerySingleOrDefaultAsync<DashboardModel>("dbo.spDashboardData_Get");
+            DashboardModel? dashboard = await connection.QuerySingleOrDefaultAsync<DashboardModel>("dbo.spDashboardData_Get");
 
             if (dashboard == null)
             {
