@@ -25,7 +25,7 @@ namespace PersonalFinanceLibrary
 
                 dashboard.DateUpdated = DateTime.Now;
 
-                await GlobalConfig.Connection.UpdateDashboard(dashboard);
+                await GlobalConfig.Connection.CreateDashboard(dashboard);
             }
         }
 
@@ -94,7 +94,7 @@ namespace PersonalFinanceLibrary
 
             dashboard.DateUpdated = DateTime.Now;
 
-            await GlobalConfig.Connection!.UpdateDashboard(dashboard);
+            await GlobalConfig.Connection!.CreateDashboard(dashboard);
         }
 
         public async static void HandlePurchase(PurchaseModel purchase)
@@ -136,25 +136,12 @@ namespace PersonalFinanceLibrary
                 dashboard.TotalBalance += purchase.Amount;
             }
 
-            //decimal previousBillsTotal = dashboard.BillsTotal;
-
             dashboard.BillsTotal = bills.BillsTotal;
 
             dashboard.DateUpdated = DateTime.Now;
 
-            await GlobalConfig.Connection!.UpdateDashboard(dashboard);
+            await GlobalConfig.Connection!.CreateDashboard(dashboard);
 
-            //if (previousBillsTotal != dashboard.BillsTotal)
-            //{
-            //    if (bills.BillsTotal > previousBillsTotal)
-            //    {
-            //        // TODO - bills increased notification ( create a method )
-            //    }
-            //    else
-            //    {
-            //        // TODO - bills decreased notification ( create a method )
-            //    }
-            //}
         }
 
     }

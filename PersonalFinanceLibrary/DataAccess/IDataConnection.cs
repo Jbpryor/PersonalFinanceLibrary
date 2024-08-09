@@ -19,15 +19,4 @@ namespace PersonalFinanceLibrary.DataAccess
         Task<DashboardModel> DashboardData_Get();
         Task<List<DepositModel>> Deposits_GetAll();
     }
-
-    // To populate the dashboard...
-
-    // need to store full deposit balance in a variable and update the value each time there is a deposit
-
-    // need to store full purchase balance in a variable and update the value each time there is a purchase unless category is gas or grocery
-
-    // need to store gas total in a variable
-
-    // need to store grocery total in a variable
-
 }
