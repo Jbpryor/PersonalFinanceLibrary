@@ -14,7 +14,7 @@ namespace PersonalFinanceLibrary.DataAccess
         Task CreatePurchase(PurchaseModel model);
         Task DeleteCreditCard(CreditCardModel model);
         Task CreateDashboard(DashboardModel model);
-        Task UpdateDashboard(DashboardModel model);
+        //Task UpdateDashboard(DashboardModel model);
         Task<List<CreditCardModel>> CreditCards_GetAll();
         Task<DashboardModel> DashboardData_Get();
         Task<List<DepositModel>> Deposits_GetAll();

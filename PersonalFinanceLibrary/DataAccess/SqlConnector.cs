@@ -140,21 +140,21 @@ namespace PersonalFinanceLibrary.DataAccess
             await connection.ExecuteAsync("dbo.spCreditCard_Delete", card, commandType: CommandType.StoredProcedure);
         }
 
-        public async Task UpdateDashboard(DashboardModel model)
-        {
-            using IDbConnection connection = OpenConnection();
+        //public async Task UpdateDashboard(DashboardModel model)
+        //{
+        //    using IDbConnection connection = OpenConnection();
 
-            var dashboard = new DynamicParameters();
+        //    var dashboard = new DynamicParameters();
 
-            dashboard.Add("@DateUpdated", DateTime.Now);
-            dashboard.Add("@TotalBalance", model.TotalBalance);
-            dashboard.Add("@GasBalance", model.GasBalance);
-            dashboard.Add("@GroceriesBalance", model.GroceriesBalance);
-            dashboard.Add("@BillsTotal", model.BillsTotal);
-            dashboard.Add("@id", model.Id);
+        //    dashboard.Add("@DateUpdated", DateTime.Now);
+        //    dashboard.Add("@TotalBalance", model.TotalBalance);
+        //    dashboard.Add("@GasBalance", model.GasBalance);
+        //    dashboard.Add("@GroceriesBalance", model.GroceriesBalance);
+        //    dashboard.Add("@BillsTotal", model.BillsTotal);
+        //    dashboard.Add("@id", model.Id);
 
-            await connection.ExecuteAsync("dbo.spDashboardData_Update", dashboard, commandType: CommandType.StoredProcedure);
-        }
+        //    await connection.ExecuteAsync("dbo.spDashboardData_Update", dashboard, commandType: CommandType.StoredProcedure);
+        //}
 
         public async Task<List<DepositModel>> Deposits_GetAll()
         {
