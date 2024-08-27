@@ -63,7 +63,7 @@ namespace PersonalFinanceLibrary.DataAccess
 
             model.Id = deposit.Get<int>("@id");
 
-            UpdateDashboardData.HandleDeposit(model);
+            await UpdateDashboardData.HandleDeposit(model);
         }
 
         public async Task CreatePurchase(PurchaseModel model)
@@ -83,7 +83,7 @@ namespace PersonalFinanceLibrary.DataAccess
 
             model.Id = purchase.Get<int>("@id");
 
-            UpdateDashboardData.HandlePurchase(model);
+            await UpdateDashboardData.HandlePurchase(model);
         }
 
         public async Task<List<CreditCardModel>> CreditCards_GetAll()
@@ -106,7 +106,7 @@ namespace PersonalFinanceLibrary.DataAccess
             return output.ToList();
         }
 
-        public async Task <DashboardModel> DashboardData_Get()
+        public async Task<DashboardModel> DashboardData_Get()
         {
             using IDbConnection connection = OpenConnection();
 
@@ -127,6 +127,17 @@ namespace PersonalFinanceLibrary.DataAccess
             }
 
             return dashboard;
+        }
+
+        public async Task<List<DashboardModel>> DashboardData_GetAll()
+        {
+            List<DashboardModel> output;
+
+            using IDbConnection connection = OpenConnection();
+
+            output = (await connection.QueryAsync<DashboardModel>("dbo.spDashboardData_GetAll")).ToList();
+
+            return output.ToList();
         }
 
         public async Task DeleteCreditCard(CreditCardModel model)

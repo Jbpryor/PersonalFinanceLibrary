@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="P_Finance.UI.Views.TitleBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:P_Finance.UI.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="40"
+             d:DesignWidth="1000">
+    <Grid Margin="0,10,0,-10">
+
+        <StackPanel HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="20,-5,0,0">
+            <Image Source="\Resources\Images\finance_icon.ico"
+                   Height="20"
+                   Width="20"
+                   RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform >
+                    <RotateTransform x:Name="RotateTransform" Angle="{Binding RotateTransform.Angle, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                </Image.RenderTransform>
+            </Image>
+        </StackPanel>
+
+        <local:TitleBarNavView x:Name="TitleBarNav"
+                               DataContext="{Binding TitleBarNavViewModel}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Margin="30,-10,0,0"/>
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Style="{StaticResource MinimizeBtn_Style}"
+                    Command="{Binding MinimizeWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            <Button Style="{StaticResource MaximizeRestoreBtn_Style}"
+                    Command="{Binding MaximizeRestoreWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            <Button Style="{StaticResource CloseBtn_Style}"
+                    Command="{Binding CloseWindowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+        </StackPanel>
+
+    </Grid>
+</UserControl>

@@ -1,5 +1,4 @@
-﻿
-namespace PersonalFinanceLibrary.Models
+﻿namespace PersonalFinanceLibrary.Models
 {
     public class DepositModel
     {

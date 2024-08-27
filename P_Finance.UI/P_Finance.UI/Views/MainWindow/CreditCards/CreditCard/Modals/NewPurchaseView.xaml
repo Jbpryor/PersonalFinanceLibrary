@@ -1,0 +1,167 @@
+﻿<UserControl x:Class="P_Finance.UI.Views.NewPurchaseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:P_Finance.UI.Views"
+             mc:Ignorable="d"
+             Height="250"
+             Width="400">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90*" />
+            <RowDefinition Height="75*" />
+            <RowDefinition Height="75*" />
+            <RowDefinition Height="75*" />
+            <RowDefinition Height="75*" />
+            <RowDefinition Height="142*" />
+        </Grid.RowDefinitions>
+
+
+        <TextBlock Text="New Purchase"
+                   FontSize="26"
+                   Foreground="{StaticResource Modal}"
+                   Margin="40,0,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Height="35"
+                   Width="auto" />
+        
+        <Button HorizontalAlignment="Right"
+                Style="{StaticResource CloseModalBtn_Style}"
+                Command="{Binding CloseModalCommand}" />
+
+
+        <Grid Grid.Row="1"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              Height="25"
+              Width="300">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Text="Name"
+                       FontSize="20"
+                       Foreground="{StaticResource Font}"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center" />
+
+            <TextBox Grid.Column="1"
+                     Background="{StaticResource PrimaryBackground}"
+                     Style="{DynamicResource TextBoxStyle}"
+                     Foreground="{StaticResource Font}"
+                     Height="25"
+                     Width="200"
+                     Padding="3 0 0 0"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+                     Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+
+        <Grid Grid.Row="2"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              Height="25"
+              Width="300">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Text="Amount"
+                       FontSize="20"
+                       Foreground="{StaticResource Font}"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center" />
+
+            <TextBox Grid.Column="1"
+                     Background="{StaticResource PrimaryBackground}"
+                     Style="{DynamicResource TextBoxStyle}"
+                     Foreground="{StaticResource Font}"
+                     Height="25"
+                     Width="200"
+                     Padding="3 2 0 0"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+                     Text="{Binding Amount, StringFormat=N2, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+
+        <Grid Grid.Row="3"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              Height="25"
+              Width="300">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Text="Card"
+                       FontSize="20"
+                       Foreground="{StaticResource Font}"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center" />
+
+            <ComboBox Grid.Column="1"
+                      Style="{StaticResource ComboBoxStyle}"
+                      ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}"
+                      Foreground="{StaticResource Font}"
+                      Height="25"
+                      Width="200"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center"
+                      ItemsSource="{Binding CreditCards, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding SelectedCard, Mode=TwoWay}"
+                      SelectedValue="{Binding SelectedCard}"
+                      DisplayMemberPath="CardName" />
+        </Grid>
+
+        <Grid Grid.Row="4"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              Height="25"
+              Width="300">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Text="Category"
+                       FontSize="20"
+                       Foreground="{StaticResource Font}"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center" />
+
+            <ComboBox Grid.Column="1"                      
+                      Style="{StaticResource ComboBoxStyle}"
+                      ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}"
+                      Foreground="{StaticResource Font}"
+                      Height="25"
+                      Width="200"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center"
+                      ItemsSource="{Binding Categories, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding SelectedCategory}"
+                      DisplayMemberPath="Name"/>
+        </Grid>
+
+        <Button Grid.Row="5"
+                Height="35"
+                Width="200"
+                Content="Create Purchase"
+                Style="{DynamicResource ButtonStyle}"
+                FontSize="20"
+                FontWeight="Bold"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Command="{Binding NewPurchaseCommand}"/>
+
+    </Grid>
+</UserControl>

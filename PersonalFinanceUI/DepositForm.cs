@@ -5,8 +5,8 @@ namespace PersonalFinanceUI
 {
     public partial class DepositForm : Form
     {
-        private List<CategoryModel> categories = [];
-        private CategoryModel selectedCategory = new();
+        private List<PurchaseCategoryModel> categories = [];
+        private PurchaseCategoryModel selectedCategory = new();
 
         public DepositForm()
         {
@@ -17,11 +17,11 @@ namespace PersonalFinanceUI
 
         private void PopulateCategories()
         {
-            categories.Add(new CategoryModel { Id = 1, Name = "Cash" });
-            categories.Add(new CategoryModel { Id = 2, Name = "PayCheck" });
-            categories.Add(new CategoryModel { Id = 3, Name = "Bonus" });
-            categories.Add(new CategoryModel { Id = 4, Name = "ExtraCheck" });
-            categories.Add(new CategoryModel { Id = 5, Name = "Other" });
+            categories.Add(new PurchaseCategoryModel { Id = 1, Name = "Cash" });
+            categories.Add(new PurchaseCategoryModel { Id = 2, Name = "PayCheck" });
+            categories.Add(new PurchaseCategoryModel { Id = 3, Name = "Bonus" });
+            categories.Add(new PurchaseCategoryModel { Id = 4, Name = "ExtraCheck" });
+            categories.Add(new PurchaseCategoryModel { Id = 5, Name = "Other" });
 
             categories = [.. categories.OrderBy(category => category.Name)];
 
@@ -70,7 +70,7 @@ namespace PersonalFinanceUI
 
         private void depositCategoryDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectedCategory = (CategoryModel)depositCategoryDropdown.SelectedItem;
+            selectedCategory = (PurchaseCategoryModel)depositCategoryDropdown.SelectedItem;
         }
 
         private void dashboardLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

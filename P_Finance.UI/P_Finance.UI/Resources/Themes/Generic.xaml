@@ -1,0 +1,139 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:P_Finance.UI.Controls"
+                    xmlns:Icon="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    x:Class="P_Finance.UI.Resources.Themes.Generic">
+
+
+    <!-- Menu Button Icon Style -->
+
+    <Style x:Key="menuBtnIcon"
+           TargetType="Icon:PackIcon">
+        <Setter Property="Width"
+                Value="20" />
+        <Setter Property="Height"
+                Value="20" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Margin"
+                Value="10 2 10 0" />
+    </Style>
+
+    <!-- TitleBar NavButton Style -->
+
+    <Style TargetType="{x:Type local:NavButton}"
+           x:Key="TitleBar">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Foreground"
+                Value="{StaticResource Font}" />
+
+        <Setter Property="Margin"
+                Value="50 0 0 0" />
+        <Setter Property="FontSize"
+                Value="15" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:NavButton}">
+                    <TextBlock Text="{TemplateBinding Text}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="{StaticResource Theme}" />
+                <Setter Property="Cursor"
+                        Value="Hand" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!-- TitleBar NavLink Style -->
+
+    <Style TargetType="{x:Type local:NavLink}"
+           x:Key="TitleBarLinks">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Foreground"
+                Value="{StaticResource Font}" />
+
+        <Setter Property="Margin"
+                Value="50 0 0 0" />
+        <Setter Property="FontSize"
+                Value="15" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:NavLink}">
+                    <TextBlock Text="{TemplateBinding Text}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="{StaticResource Theme}" />
+                <Setter Property="Cursor"
+                        Value="Hand" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Default style for NavLink -->
+    
+    <Style TargetType="{x:Type local:NavLink}"
+           BasedOn="{StaticResource TitleBarLinks}" />
+
+
+    <!-- SideBar NavButton Style -->
+
+    <Style TargetType="{x:Type local:NavButton}"
+           x:Key="SideBar">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Foreground"
+                Value="{StaticResource Font}" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
+        <Setter Property="Height"
+                Value="35" />
+        <Setter Property="Margin"
+                Value="15 3" />
+        <Setter Property="FontSize"
+                Value="15" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:NavButton}">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="7">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center">
+                            <Icon:PackIcon Kind="{TemplateBinding Icon}"
+                                           Style="{StaticResource menuBtnIcon}" />
+                            <TextBlock Text="{TemplateBinding Text}"
+                                       Margin="10 2 10 0"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="{StaticResource PrimaryBackground}" />
+                <Setter Property="Cursor"
+                        Value="Hand" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+</ResourceDictionary>

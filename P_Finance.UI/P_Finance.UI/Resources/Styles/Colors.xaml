@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    
+    <!--// Colors //-->
+    
+    <Color x:Key="ThemeColor">#FF019000</Color>
+    <Color x:Key="DarkThemeColor">#FF006400</Color>
+    <Color x:Key="BrightThemeColor">#FF0AFF02</Color>
+    <Color x:Key="LightThemeColor">#FF8BCC7D</Color>
+
+    <Color x:Key="PrimaryBackgroundColor">#000000</Color>
+    <Color x:Key="SecondaryBackgroundColor">#FF191919</Color>
+    <Color x:Key="FontColor">#F3F3F3</Color>
+    
+    
+    <Color x:Key="ModalColor">#FFBD09BD</Color>
+    <Color x:Key="DarkModalColor">#FF9400D3</Color>
+   
+
+    
+    <!--// Brushes //-->
+
+    <SolidColorBrush x:Key="Theme" Color="{StaticResource ThemeColor}" />
+    <SolidColorBrush x:Key="DarkTheme" Color="{StaticResource DarkThemeColor}" />
+    <SolidColorBrush x:Key="BrightTheme" Color="{StaticResource BrightThemeColor}" />
+    <SolidColorBrush x:Key="LightTheme" Color="{StaticResource LightThemeColor}" />
+
+
+    <SolidColorBrush x:Key="PrimaryBackground" Color="{StaticResource PrimaryBackgroundColor}"/>
+    <SolidColorBrush x:Key="SecondaryBackground" Color="{StaticResource SecondaryBackgroundColor}"/>
+    <SolidColorBrush x:Key="Font" Color="{StaticResource FontColor}"/>
+
+
+    <SolidColorBrush x:Key="Modal" Color="{StaticResource ModalColor}"/>
+    <SolidColorBrush x:Key="DarkModal" Color="{StaticResource DarkModalColor}"/>
+
+
+
+</ResourceDictionary>

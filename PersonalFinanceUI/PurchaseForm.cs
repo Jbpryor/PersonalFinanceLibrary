@@ -15,9 +15,9 @@ namespace PersonalFinanceUI
     public partial class PurchaseForm : Form
     {
         List<CreditCardModel> creditCards = [];
-        List<CategoryModel> categories = [];
+        List<PurchaseCategoryModel> categories = [];
         CreditCardModel selectedCard = new();
-        CategoryModel selectedCategory = new();
+        PurchaseCategoryModel selectedCategory = new();
 
         public PurchaseForm()
         {
@@ -30,7 +30,7 @@ namespace PersonalFinanceUI
 
         private void PopulateCategoryList()
         {
-            categories = [.. CategoryModel.Categories().Where(category => category.Id != 5 && category.Id != 6).OrderBy(category => category.Name)];
+            categories = [.. PurchaseCategoryModel.Categories().Where(category => category.Id != 5 && category.Id != 6).OrderBy(category => category.Name)];
 
             purchaseCategoryDropdown.DataSource = null;
             purchaseCategoryDropdown.DataSource = categories;
@@ -57,7 +57,7 @@ namespace PersonalFinanceUI
 
         private void purchaseCategoryDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectedCategory = (CategoryModel)purchaseCategoryDropdown.SelectedItem;
+            selectedCategory = (PurchaseCategoryModel)purchaseCategoryDropdown.SelectedItem;
         }
 
         private async void createPurchaseButton_Click(object sender, EventArgs e)

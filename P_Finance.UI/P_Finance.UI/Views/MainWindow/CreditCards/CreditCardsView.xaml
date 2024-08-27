@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="P_Finance.UI.Views.CreditCardsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:converters="clr-namespace:P_Finance.UI.Converters"
+      xmlns:components="clr-namespace:P_Finance.UI.Components"
+      xmlns:viewmodels="clr-namespace:P_Finance.UI.ViewModels"
+      xmlns:utilities="clr-namespace:P_Finance.UI.Utilities"
+      mc:Ignorable="d">
+
+
+
+    <ContentControl.Resources>
+        <DataTemplate x:Key="CreditCardTemplate">
+            <components:InfoCard Title="{Binding CardName}"
+                                 Number="{Binding BalanceTotal, StringFormat=N2}"
+                                 Command="{Binding ViewCardPurchasesCommand}"
+                                 MinHeight="120"
+                                 Width="195"
+                                 DataContext="{Binding}"
+                                 DataPoints="{Binding BalanceTotalCollection}"/>
+        </DataTemplate>
+    </ContentControl.Resources>
+
+    <Border>
+        <ItemsControl ItemsSource="{Binding CreditCards}"
+                      ItemTemplate="{StaticResource CreditCardTemplate}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"
+                               HorizontalAlignment="Center" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Border>
+
+</UserControl>

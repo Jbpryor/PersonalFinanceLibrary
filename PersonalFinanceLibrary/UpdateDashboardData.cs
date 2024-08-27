@@ -1,10 +1,5 @@
 ﻿using PersonalFinanceLibrary.DataAccess;
 using PersonalFinanceLibrary.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PersonalFinanceLibrary
 {
@@ -13,7 +8,7 @@ namespace PersonalFinanceLibrary
         private static DashboardModel dashboard;
         private static BillsModel bills;
 
-        public async static void InitializeData()
+        public static async Task InitializeData()
         {
             dashboard = await GlobalConfig.Connection!.DashboardData_Get();
 
@@ -29,7 +24,7 @@ namespace PersonalFinanceLibrary
             }
         }
 
-        public async static void HandleDeposit(DepositModel deposit)
+        public static async Task HandleDeposit(DepositModel deposit)
         {
             if (deposit.CategoryId == 1)
             {
@@ -97,7 +92,7 @@ namespace PersonalFinanceLibrary
             await GlobalConfig.Connection!.CreateDashboard(dashboard);
         }
 
-        public async static void HandlePurchase(PurchaseModel purchase)
+        public static async Task HandlePurchase(PurchaseModel purchase)
         {
             // Gas Purchase
             if (purchase.CategoryId == 1)
