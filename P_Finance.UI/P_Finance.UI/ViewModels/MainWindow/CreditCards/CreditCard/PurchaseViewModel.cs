@@ -15,7 +15,7 @@ public class PurchaseViewModel : ViewModelBase, IAmountService
     public int CategoryId => _purchase.CategoryId;
     public decimal Amount => _purchase.Amount;
     public int CreditCardId => _purchase.CreditCardId;
-    public string? CategoryName => CategoryModel.GetCategoryNameById(CategoryId);
+    public string? CategoryName => PurchaseCategoryModel.GetCategoryNameById(CategoryId);
 
 
 

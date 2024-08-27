@@ -1,5 +1,4 @@
-﻿
-namespace P_Finance.Core.Models
+﻿namespace P_Finance.Core.Models
 {
     public class DepositModel
     {
@@ -16,6 +15,5 @@ namespace P_Finance.Core.Models
                 return DepositCategoryModel.GetCategoryNameById(CategoryId);
             }
         }
-
     }
 }

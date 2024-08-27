@@ -1,7 +1,5 @@
-﻿using ClosedXML.Excel;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using P_Finance.Core.Models;
-using System;
 using System.Configuration;
 
 namespace P_Finance.Core.DataAccess

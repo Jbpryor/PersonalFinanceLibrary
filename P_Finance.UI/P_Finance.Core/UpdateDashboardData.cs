@@ -136,8 +136,6 @@ namespace P_Finance.Core
             dashboard.DateUpdated = DateTime.Now;
 
             await GlobalConfig.Connection!.CreateDashboard(dashboard);
-
         }
-
     }
 }

@@ -10,8 +10,8 @@ namespace P_Finance.UI.ViewModels;
 public class NewPurchaseViewModel : ViewModelBase
 {
 
-    private readonly ObservableCollection<CategoryModel> _categories;
-    public IEnumerable<CategoryModel> Categories => _categories;
+    private readonly ObservableCollection<PurchaseCategoryModel> _categories;
+    public IEnumerable<PurchaseCategoryModel> Categories => _categories;
 
 
     private readonly CreditCardService _creditCardService;
@@ -65,8 +65,8 @@ public class NewPurchaseViewModel : ViewModelBase
     }
 
     
-    private CategoryModel? _selectedCategory;
-    public CategoryModel? SelectedCategory
+    private PurchaseCategoryModel? _selectedCategory;
+    public PurchaseCategoryModel? SelectedCategory
     {
         get { return _selectedCategory; }
         set
@@ -99,9 +99,9 @@ public class NewPurchaseViewModel : ViewModelBase
 
     private void PopulateCategories()
     {
-        List<CategoryModel> _categoryList = [.. CategoryModel.Categories().Where(category => category.Id != 5 && category.Id != 6).OrderBy(category => category.Name)];
+        List<PurchaseCategoryModel> _categoryList = [.. PurchaseCategoryModel.Categories().Where(category => category.Id != 5 && category.Id != 6).OrderBy(category => category.Name)];
 
-        foreach (CategoryModel category in _categoryList)
+        foreach (PurchaseCategoryModel category in _categoryList)
         {
             _categories.Add(category);
         }

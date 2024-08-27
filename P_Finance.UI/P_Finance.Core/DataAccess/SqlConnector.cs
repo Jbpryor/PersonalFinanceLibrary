@@ -2,7 +2,6 @@
 using P_Finance.Core.Models;
 using System.Data;
 
-
 namespace P_Finance.Core.DataAccess
 {
     public class SqlConnector : IDataConnection
