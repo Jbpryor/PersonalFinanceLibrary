@@ -32,7 +32,7 @@ namespace P_Finance.Core
             }
             if (deposit.CategoryId == 2)
             {
-                dashboard.TotalBalance += HandlePaycheckDeposit(deposit.Amount);
+                dashboard.TotalBalance += HandlePaycheckDeposit(deposit.Amount) + bills.BillsTotal;
                 dashboard.GasBalance = 100;
                 dashboard.GroceriesBalance = 125;
             }
@@ -40,9 +40,12 @@ namespace P_Finance.Core
             {
                 dashboard.TotalBalance += HandleBonusDeposit(deposit.Amount);
             }
+            // Extra Paycheck (3 in a month)
             if (deposit.CategoryId == 4)
             {
-                dashboard.TotalBalance += HandleExtraCheckDeposit(deposit.Amount);
+                dashboard.TotalBalance += HandlePaycheckDeposit(deposit.Amount) + bills.BillsTotal;
+                dashboard.GasBalance = 100;
+                dashboard.GroceriesBalance = 125;
             }
             if (deposit.CategoryId == 5)
             {
@@ -51,7 +54,7 @@ namespace P_Finance.Core
 
             decimal HandlePaycheckDeposit(decimal checkAmount)
             {
-                return checkAmount - bills.AmountFromCheck + (100 - dashboard.GasBalance) + dashboard.GroceriesBalance;
+                return checkAmount - bills.AmountFromCheck + (dashboard.GasBalance + 40 - 100) + dashboard.GroceriesBalance;
             }
 
             decimal HandleBonusDeposit(decimal bonusAmount)
@@ -82,10 +85,10 @@ namespace P_Finance.Core
                 return roundedValue;
             }
 
-            decimal HandleExtraCheckDeposit(decimal extraCheckAmount)
-            {
-                return extraCheckAmount - (bills.AmountFromCheck - bills.BillsTotal) + dashboard.GasBalance + dashboard.GroceriesBalance + dashboard.TotalBalance;
-            }
+            //decimal HandleExtraCheckDeposit(decimal extraCheckAmount)
+            //{
+            //    return extraCheckAmount - (bills.AmountFromCheck - bills.BillsTotal) + (100 - dashboard.GasBalance) + dashboard.GroceriesBalance;
+            //}
 
             dashboard.DateUpdated = DateTime.Now;
 
