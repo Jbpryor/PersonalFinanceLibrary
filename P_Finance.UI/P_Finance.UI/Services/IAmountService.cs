@@ -3,5 +3,6 @@
     public interface IAmountService
     {
         decimal Amount { get; }
+        DateTime Date { get; }
     }
 }

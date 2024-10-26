@@ -1,8 +1,8 @@
 ﻿using P_Finance.Core.Models;
-using P_Finance.Core;
 using System.Collections.ObjectModel;
 using P_Finance.UI.Stores;
 using P_Finance.Core.DataAccess;
+
 
 namespace P_Finance.UI.ViewModels;
 
@@ -22,11 +22,17 @@ public class DashboardViewModel : ViewModelBase
     private readonly ObservableCollection<AmountStore> _billsTotalCollection = [];
     public IEnumerable<AmountStore> BillsTotalCollection => _billsTotalCollection.Reverse();
 
+    private readonly ObservableCollection<DashboardModel> _dashboards = [];
+    public IEnumerable<DashboardModel> Dashboards => _dashboards.OrderBy(d => d.Date);
+
 
     public DashboardViewModel(IDataConnection connection)
     {
         _connection = connection;
-        _ = PopulateData();
+
+        Years = [];
+
+        PopulateData();
     }
 
 
@@ -36,7 +42,7 @@ public class DashboardViewModel : ViewModelBase
     private string? _groceriesSpendingPower;
     private string? _totalBillsPerCheck;
 
-    public string? DateUpdated
+    public string? Date
     {
         get => _dateUpdated;
         set
@@ -44,7 +50,7 @@ public class DashboardViewModel : ViewModelBase
             if (_dateUpdated != value)
             {
                 _dateUpdated = value;
-                OnPropertyChanged(nameof(DateUpdated));
+                OnPropertyChanged(nameof(Date));
             }
         }
     }
@@ -100,30 +106,67 @@ public class DashboardViewModel : ViewModelBase
             }
         }
     }
+    public ObservableCollection<string>? Years { get; private set; }
 
-    private async Task PopulateData()
+
+    private string? _selectedYear = "Year";
+    public string? SelectedYear
     {
+        get => _selectedYear;
+        set
+        {
+            if (_selectedYear != value)
+            {
+                _selectedYear = value;
+                OnPropertyChanged(nameof(SelectedYear));
+            }
+        }
+    }
+
+    private bool _isRefreshing;
+
+    private async void PopulateData()
+    {
+        if (_isRefreshing) return;
+        _isRefreshing = true;
+
         DashboardModel dashboard = await _connection.DashboardData_Get();
 
-        DateUpdated = dashboard.DateUpdated.ToString("MM/dd/yyyy");
+        Date = dashboard.Date.ToString("MM/dd/yyyy");
         TotalSpendingPower = dashboard.TotalBalance.ToString("N2");
         GasSpendingPower = dashboard.GasBalance.ToString("N2");
         GroceriesSpendingPower = dashboard.GroceriesBalance.ToString("N2");
         TotalBillsPerCheck = dashboard.BillsTotal.ToString("N2");
 
-        await PopulateDashboards();
+        PopulateDashboardCollection();
+
+        _isRefreshing = false;
     }
 
-    public async Task PopulateDashboards()
+    public async void PopulateDashboardCollection()
+    {
+        _dashboards.Clear();
+
+        var dashboardsFromDb = (await _connection.DashboardData_GetAll());
+
+        foreach (DashboardModel dashboard in dashboardsFromDb)
+        {
+            _dashboards.Add(dashboard);
+        }
+
+        PopulateLineChartData();
+
+        OnPropertyChanged(nameof(Dashboards));
+    }
+
+    public void PopulateLineChartData()
     {
         _totalBalanceCollection.Clear();
         _gasBalanceCollection.Clear();
         _groceriesBalanceCollection.Clear();
         _billsTotalCollection.Clear();
 
-        var dashboardsFromDatabase = (await _connection.DashboardData_GetAll());
-
-        foreach (DashboardModel dashboard in dashboardsFromDatabase)
+        foreach (DashboardModel dashboard in _dashboards)
         {
             _totalBalanceCollection.Add(new AmountStore(dashboard.TotalBalance));
             _gasBalanceCollection.Add(new AmountStore(dashboard.GasBalance));

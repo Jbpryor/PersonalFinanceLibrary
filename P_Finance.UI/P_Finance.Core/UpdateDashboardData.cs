@@ -18,7 +18,7 @@ namespace P_Finance.Core
             {
                 dashboard.BillsTotal = bills.BillsTotal;
 
-                dashboard.DateUpdated = DateTime.Now;
+                dashboard.Date = DateTime.Now;
 
                 await GlobalConfig.Connection.CreateDashboard(dashboard);
             }
@@ -32,7 +32,7 @@ namespace P_Finance.Core
             }
             if (deposit.CategoryId == 2)
             {
-                dashboard.TotalBalance += HandlePaycheckDeposit(deposit.Amount) + bills.BillsTotal;
+                dashboard.TotalBalance += HandlePaycheckDeposit(deposit.Amount);
                 dashboard.GasBalance = 100;
                 dashboard.GroceriesBalance = 125;
             }
@@ -90,7 +90,7 @@ namespace P_Finance.Core
             //    return extraCheckAmount - (bills.AmountFromCheck - bills.BillsTotal) + (100 - dashboard.GasBalance) + dashboard.GroceriesBalance;
             //}
 
-            dashboard.DateUpdated = DateTime.Now;
+            dashboard.Date = DateTime.Now;
 
             await GlobalConfig.Connection!.CreateDashboard(dashboard);
         }
@@ -136,7 +136,7 @@ namespace P_Finance.Core
 
             dashboard.BillsTotal = bills.BillsTotal;
 
-            dashboard.DateUpdated = DateTime.Now;
+            dashboard.Date = DateTime.Now;
 
             await GlobalConfig.Connection!.CreateDashboard(dashboard);
         }

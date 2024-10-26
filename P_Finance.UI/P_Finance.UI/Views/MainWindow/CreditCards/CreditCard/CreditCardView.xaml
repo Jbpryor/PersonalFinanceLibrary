@@ -54,6 +54,7 @@
                       ItemContainerStyle="{DynamicResource ComboBoxItemContainerStyle}"
                       ItemsSource="{Binding Months}"
                       SelectedItem="{Binding SelectedMonth, Mode=TwoWay}"
+                      IsEnabled="{Binding IsMonthEnabled}"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Center"
                       Width="160"
@@ -76,7 +77,7 @@
                       BorderBrush="{x:Null}"
                       Foreground="{StaticResource Font}"
                       Margin="10 0 0 0"
-                      Padding="10 0 0 0"/>
+                      Padding="10 0 0 0" />
         </StackPanel>
 
 

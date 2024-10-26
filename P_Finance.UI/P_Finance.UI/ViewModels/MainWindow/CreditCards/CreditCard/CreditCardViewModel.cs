@@ -13,7 +13,7 @@ public class CreditCardViewModel : ViewModelBase
 
 
     private readonly ObservableCollection<PurchaseViewModel> _purchases;
-    public IEnumerable<PurchaseViewModel> Purchases => _purchases.OrderByDescending(purchase => purchase.Id);
+    public IEnumerable<PurchaseViewModel> Purchases => _purchases.OrderByDescending(purchase => purchase.Id).Where(purchase => purchase.CategoryId != 4 && purchase.CategoryId != 5);
 
 
 
@@ -55,6 +55,8 @@ public class CreditCardViewModel : ViewModelBase
         }
     }
 
+    public bool IsMonthEnabled => SelectedYear != "All" && SelectedYear != "Year";
+
     private string? _selectedYear = "Year";
     public string? SelectedYear
     {
@@ -65,6 +67,11 @@ public class CreditCardViewModel : ViewModelBase
             {
                 _selectedYear = value;
                 OnPropertyChanged(nameof(SelectedYear));
+                OnPropertyChanged(nameof(IsMonthEnabled));
+                if (!IsMonthEnabled)
+                {
+                    SelectedMonth = "Month";
+                }
                 RefreshData();
             }
         }
@@ -182,7 +189,7 @@ public class CreditCardViewModel : ViewModelBase
 
     public Dictionary<string, ObservableCollection<PurchaseViewModel>> GetPurchasesByCategory()
     {
-        return _purchases.Where(purchase => purchase.CategoryId != 5 &&  purchase.CategoryId != 6).GroupBy(purchase => purchase.CategoryName!).ToDictionary(group => group.Key, group => new ObservableCollection<PurchaseViewModel>(group.Reverse().ToList()));
+        return Purchases.Where(purchase => purchase.CategoryId != 5 &&  purchase.CategoryId != 6).GroupBy(purchase => purchase.CategoryName!).ToDictionary(group => group.Key, group => new ObservableCollection<PurchaseViewModel>(group.Reverse().ToList()));
     }
 
     public ObservableCollection<KeyValuePair<string, ObservableCollection<PurchaseViewModel>>>? TopCategories { get; set; }

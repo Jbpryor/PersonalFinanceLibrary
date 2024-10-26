@@ -6,11 +6,19 @@ namespace P_Finance.Core.DataAccess
 {
     public class SqlConnector : IDataConnection
     {
-        private const string db = "PersonalFinances";
+        private const string db = "P-Finance";
 
         private static IDbConnection OpenConnection()
         {
-            return new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectorString(db));
+            try
+            {
+                return new System.Data.SqlClient.SqlConnection(GlobalConfig.ConnectorString(db));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Connection failed: " + ex.Message);
+                throw;
+            }
         }
         public async Task CreateCreditCard(CreditCardModel model)
         {
@@ -34,7 +42,7 @@ namespace P_Finance.Core.DataAccess
 
             var dashboard = new DynamicParameters();
 
-            dashboard.Add("@DateUpdated", model.DateUpdated);
+            dashboard.Add("@Date", model.Date);
             dashboard.Add("@TotalBalance", model.TotalBalance);
             dashboard.Add("@GasBalance", model.GasBalance);
             dashboard.Add("@GroceriesBalance", model.GroceriesBalance);
@@ -115,7 +123,7 @@ namespace P_Finance.Core.DataAccess
             {
                 dashboard = new DashboardModel
                 {
-                    DateUpdated = DateTime.Now,
+                    Date = DateTime.Now,
                     TotalBalance = 0,
                     GasBalance = 0,
                     GroceriesBalance = 0,
@@ -139,6 +147,17 @@ namespace P_Finance.Core.DataAccess
             return output.ToList();
         }
 
+        public async Task<List<PurchaseModel>> Purchases_GetAll()
+        {
+            List<PurchaseModel> output;
+
+            using IDbConnection connection = OpenConnection();
+
+            output = (await connection.QueryAsync<PurchaseModel>("dbo.spPurchases_GetAll")).ToList();
+
+            return output.ToList();
+        }
+
         public async Task DeleteCreditCard(CreditCardModel model)
         {
             using IDbConnection connection = OpenConnection();
@@ -156,7 +175,7 @@ namespace P_Finance.Core.DataAccess
 
         //    var dashboard = new DynamicParameters();
 
-        //    dashboard.Add("@DateUpdated", DateTime.Now);
+        //    dashboard.Add("@Date", DateTime.Now);
         //    dashboard.Add("@TotalBalance", model.TotalBalance);
         //    dashboard.Add("@GasBalance", model.GasBalance);
         //    dashboard.Add("@GroceriesBalance", model.GroceriesBalance);

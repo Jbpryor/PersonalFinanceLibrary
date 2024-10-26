@@ -7,12 +7,13 @@ namespace P_Finance.Core.DataAccess
         Task CreateDeposit(DepositModel model);
         Task CreateCreditCard(CreditCardModel model);
         Task CreatePurchase(PurchaseModel model);
-        Task DeleteCreditCard(CreditCardModel model);
         Task CreateDashboard(DashboardModel model);
+        Task DeleteCreditCard(CreditCardModel model);
         //Task UpdateDashboard(DashboardModel model);
+        Task<DashboardModel> DashboardData_Get();
         Task<List<CreditCardModel>> CreditCards_GetAll();
         Task<List<DashboardModel>> DashboardData_GetAll();
-        Task<DashboardModel> DashboardData_Get();
         Task<List<DepositModel>> Deposits_GetAll();
+        Task<List<PurchaseModel>> Purchases_GetAll();
     }
 }

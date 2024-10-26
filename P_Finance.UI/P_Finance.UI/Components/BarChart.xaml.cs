@@ -1,22 +1,18 @@
-﻿using LiveCharts.Wpf;
-using LiveCharts;
-using System.Windows.Controls;
-using System.Windows.Media;
-using P_Finance.Core.Models;
+﻿using System.Windows.Controls;
 using System.Collections.ObjectModel;
-using System.Linq;
-using P_Finance.UI.Stores;
-using P_Finance.UI.Utilities;
+using LiveCharts.Wpf;
+using LiveCharts;
+using P_Finance.Core.Models;
 using P_Finance.Core;
-using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
+using P_Finance.UI.Stores;
+using System.Windows.Media;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
+using System.ComponentModel;
 
 namespace P_Finance.UI.Components
 {
-    /// <summary>
-    /// Interaction logic for LineChart.xaml
-    /// </summary>
-    public partial class LineChart : UserControl
+    public partial class BarChart : UserControl, INotifyPropertyChanged
     {
         private readonly ObservableCollection<DashboardModel> _dashboardsFromDb = [];
         public IEnumerable<DashboardModel> DashboardsFromDb => _dashboardsFromDb.OrderBy(d => d.Date);
@@ -26,21 +22,53 @@ namespace P_Finance.UI.Components
         public IEnumerable<AmountStore> Purchases => _purchases.OrderBy(p => p.Date);
         private readonly ObservableCollection<AmountStore> _spendingPowers = [];
         public IEnumerable<AmountStore> SpendingPowers => _spendingPowers.OrderBy(sp => sp.Date);
+
+        private readonly ObservableCollection<AmountStore> _filteredDashboards = new ObservableCollection<AmountStore>();
+        public IEnumerable<AmountStore> FilteredDashboards => _filteredDashboards.OrderBy(d => d.Date);
+        private readonly ObservableCollection<AmountStore> _filteredPurchases = new ObservableCollection<AmountStore>();
+        public IEnumerable<AmountStore> FilteredPurchases => _filteredPurchases.OrderBy(p => p.Date);
+        private readonly ObservableCollection<AmountStore> _filteredSpendingPowers = [];
+        public IEnumerable<AmountStore> FilteredSpendingPowers => _filteredSpendingPowers.OrderBy(sp => sp.Date);
         public SeriesCollection SeriesCollection { get; set; }
         public string[]? Labels { get; set; }
 
-        public LineChart()
+        public ObservableCollection<string>? Years { get; private set; }
+
+        private string? _selectedYear = "Year";
+        public string? SelectedYear
+        {
+            get => _selectedYear;
+            set
+            {
+                if (_selectedYear != value)
+                {
+                    _selectedYear = value;
+                    OnPropertyChanged(nameof(SelectedYear));
+                    UpdateFilteredData();
+                }
+            }
+        }
+
+        public BarChart()
         {
             InitializeComponent();
             DataContext = this;
             SeriesCollection = new SeriesCollection();
 
+            Years = [];
 
-            SetPurchases();
+
+            PopulateCollections();
         }
 
-        public async void SetPurchases()
+        private bool _isRefreshing;
+
+        public async void PopulateCollections()
         {
+            if (_isRefreshing) return;
+
+            _isRefreshing = true;
+
             _dashboards.Clear();
             _purchases.Clear();
 
@@ -58,6 +86,7 @@ namespace P_Finance.UI.Components
 
 
             var groupedPurchases = purchasesFromDb
+                .OrderBy(purchase => purchase.Date)
                 .Where(purchase => purchase.CategoryId != 4 && purchase.CategoryId != 5)
                 .GroupBy(purchase => new { purchase.Date.Year, purchase.Date.Month })
                 .Select(group => new
@@ -69,6 +98,7 @@ namespace P_Finance.UI.Components
                 .ToList();
 
             var groupedDashboards = dashboardsFromDb
+                .OrderBy(dashboard => dashboard.Date)
                 .GroupBy(dashboard => new { dashboard.Date.Year, dashboard.Date.Month })
                 .Select(group => new
                 {
@@ -77,8 +107,9 @@ namespace P_Finance.UI.Components
                     DashboardTotal = group.Last().TotalBalance
                 })
                 .ToList();
-            
+
             var groupedPurchasePowers = purchasePowers
+                .OrderBy(P => P.Date)
                 .GroupBy(p => new { p.Date.Year, p.Date.Month })
                 .Select(group => new
                 {
@@ -88,7 +119,7 @@ namespace P_Finance.UI.Components
                 })
                 .ToList();
 
-            var allMonths = groupedPurchases
+            var allGroups = groupedPurchases
                 .Select(g => new { g.Year, g.Month })
                 .Union(groupedDashboards.Select(g => new { g.Year, g.Month }))
                 .Union(groupedPurchasePowers.Select(g => new { g.Year, g.Month }))
@@ -97,23 +128,27 @@ namespace P_Finance.UI.Components
                 .ToList();
 
 
-            foreach (var month in allMonths)
+            foreach (var group in allGroups)
             {
-                var purchase = groupedPurchases.FirstOrDefault(g => g.Year == month.Year && g.Month == month.Month);
-                var dashboard = groupedDashboards.FirstOrDefault(g => g.Year == month.Year && g.Month == month.Month);
-                var purchasePower = groupedPurchasePowers.FirstOrDefault(g => g.Year == month.Year && g.Month == month.Month);
+                var purchase = groupedPurchases.FirstOrDefault(g => g.Year == group.Year && g.Month == group.Month);
+                var dashboard = groupedDashboards.FirstOrDefault(g => g.Year == group.Year && g.Month == group.Month);
+                var purchasePower = groupedPurchasePowers.FirstOrDefault(g => g.Year == group.Year && g.Month == group.Month);
 
-                _purchases.Add(new AmountStore(purchase?.PurchaseTotal ?? 0, new DateTime(month.Year, month.Month, 1)));
-                _dashboards.Add(new AmountStore(dashboard?.DashboardTotal ?? 0, new DateTime(month.Year, month.Month, 1)));
-                _spendingPowers.Add(new AmountStore(purchasePower?.PurchasPowerTotal ?? 0, new DateTime(month.Year, month.Month, 1)));
-            }            
+                _purchases.Add(new AmountStore(purchase?.PurchaseTotal ?? 0, new DateTime(group.Year, group.Month, 1)));
+                _dashboards.Add(new AmountStore(dashboard?.DashboardTotal ?? 0, new DateTime(group.Year, group.Month, 1)));
+                _spendingPowers.Add(new AmountStore(purchasePower?.PurchasPowerTotal ?? 0, new DateTime(group.Year, group.Month, 1)));
+            }
+
+            PopulateYearDropDown();
 
             PopulateChartData();
+
+            _isRefreshing = false;
         }
 
         private ObservableCollection<AmountStore> CreatePurchasingPowerObjects(List<DepositModel> depositsFromDb)
         {
-            var purchasingPowerObjects = new ObservableCollection<AmountStore>();            
+            var purchasingPowerObjects = new ObservableCollection<AmountStore>();
 
             for (int i = 1; i < DashboardsFromDb.Count(); i++)
             {
@@ -121,6 +156,7 @@ namespace P_Finance.UI.Components
                 var previousDashboard = DashboardsFromDb.ElementAt(i - 1);
 
                 var matchingDeposits = depositsFromDb
+                    .OrderBy(deposit => deposit.Date)
                     .Where(deposit => (deposit.CategoryId == 2 || deposit.CategoryId == 4) &&
                                       deposit.Date.Year == currentDashboard.Date.Year &&
                                       deposit.Date.Month == currentDashboard.Date.Month &&
@@ -136,8 +172,7 @@ namespace P_Finance.UI.Components
                     purchasingPowerObjects.Add(newObject);
                 }
             }
-            
-            // TODO - NEED TO FIGURE OUT HOW TO ADD OTHER DEPOSITS LIKE BONUSES
+
             return purchasingPowerObjects;
         }
 
@@ -192,5 +227,69 @@ namespace P_Finance.UI.Components
                 });
             }
         }
+
+        private void PopulateYearDropDown()
+        {
+            if (Years?.Count == 0)
+            {
+                var allYears = _spendingPowers.Select(sp => sp.Date.ToString("yyyy"))
+                    .Concat(_purchases.Select(p => p.Date.ToString("yyyy")))
+                    .Concat(_dashboards.Select(d => d.Date.ToString("yyyy")))
+                    .Concat(_spendingPowers.Select(sp => sp.Date.ToString("yyyy")))
+                    .Distinct()
+                    .OrderBy(year => year)
+                    .ToList();
+
+                Years = new ObservableCollection<string>(new[] { "Year", "All" }.Concat(allYears));
+
+                OnPropertyChanged(nameof(Years));
+            }
+        }
+
+        private void FilterCollection<T>(
+            ObservableCollection<T> filteredCollection,
+            IEnumerable<T> sourceCollection,
+            Func<T, DateTime> dateSelector)
+        {
+            filteredCollection.Clear();
+
+            var filteredItems = sourceCollection.Where(item => SelectedYear == "Year" || SelectedYear == "All" || dateSelector(item).ToString("yyyy") == SelectedYear).ToList();
+
+            foreach (var item in filteredItems)
+            {
+                filteredCollection.Add(item);
+            }
+        }
+
+        private void UpdateFilteredData()
+        {
+            FilterCollection(_filteredSpendingPowers, _spendingPowers, spendingPower => spendingPower.Date);
+            FilterCollection(_filteredDashboards, _dashboards, dashboard => dashboard.Date);
+            FilterCollection(_filteredPurchases, _purchases, purchase => purchase.Date);
+
+            PopulateChartData();
+        }
+
+
+        private bool CollectionFilter(DepositModel deposit)
+        {
+            bool includeYear = SelectedYear == "Year" || SelectedYear == "All" || deposit.Date.ToString("yyyy") == SelectedYear;
+
+            return includeYear;
+        }
+
+        public void RefreshData()
+        {
+            if (_isRefreshing) return;
+            PopulateCollections();
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
+
