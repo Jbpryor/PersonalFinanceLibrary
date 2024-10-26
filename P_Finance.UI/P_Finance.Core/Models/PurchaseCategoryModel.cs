@@ -11,7 +11,7 @@
             {
                 new PurchaseCategoryModel { Id = 1, Name = "Gas" },
                 new PurchaseCategoryModel { Id = 2, Name = "Groceries" },
-                new PurchaseCategoryModel { Id = 3, Name = "Other" },
+                new PurchaseCategoryModel { Id = 3, Name = "General" },
                 new PurchaseCategoryModel { Id = 4, Name = "Update Card Balance" },
                 new PurchaseCategoryModel { Id = 5, Name = "Payment" },
                 new PurchaseCategoryModel { Id = 6, Name = "Refund" },
