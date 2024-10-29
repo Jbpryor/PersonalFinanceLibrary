@@ -8,6 +8,7 @@ namespace P_Finance.Core.DataAccess
         Task CreateCreditCard(CreditCardModel model);
         Task CreatePurchase(PurchaseModel model);
         Task CreateDashboard(DashboardModel model);
+        Task CreateLedger(LedgerModel model);
         Task DeleteCreditCard(CreditCardModel model);
         //Task UpdateDashboard(DashboardModel model);
         Task<DashboardModel> DashboardData_Get();

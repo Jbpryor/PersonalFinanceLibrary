@@ -71,6 +71,7 @@ namespace P_Finance.Core.DataAccess
             model.Id = deposit.Get<int>("@id");
 
             await UpdateDashboardData.HandleDeposit(model);
+            LedgerService.CreateLedger<DepositModel>(model);
         }
 
         public async Task CreatePurchase(PurchaseModel model)
@@ -91,6 +92,26 @@ namespace P_Finance.Core.DataAccess
             model.Id = purchase.Get<int>("@id");
 
             await UpdateDashboardData.HandlePurchase(model);
+            LedgerService.CreateLedger<PurchaseModel>(model);
+        }
+
+        public async Task CreateLedger(LedgerModel model)
+        {
+            using IDbConnection connection = OpenConnection();
+
+            var ledger = new DynamicParameters();
+
+            ledger.Add("@Date", DateTime.Now);
+            ledger.Add("@Name", model.Name);
+            ledger.Add("@Amount", model.Amount);
+            ledger.Add("@FromId", model.FromId);
+            ledger.Add("@ModelId", model.ModelId);
+            ledger.Add("@id", 0, DbType.Int32, direction: ParameterDirection.Output);
+
+            await connection.ExecuteAsync("dbo.spLedger_Insert", ledger, commandType: CommandType.StoredProcedure);
+
+            model.Id = ledger.Get<int>("@id");
+
         }
 
         public async Task<List<CreditCardModel>> CreditCards_GetAll()
