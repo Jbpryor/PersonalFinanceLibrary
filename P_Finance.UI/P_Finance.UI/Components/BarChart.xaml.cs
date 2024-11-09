@@ -157,8 +157,7 @@ namespace P_Finance.UI.Components
 
                 var matchingDeposits = depositsFromDb
                     .OrderBy(deposit => deposit.Date)
-                    .Where(deposit => (deposit.CategoryId == 2 || deposit.CategoryId == 4) &&
-                                      deposit.Date.Year == currentDashboard.Date.Year &&
+                    .Where(deposit => deposit.Date.Year == currentDashboard.Date.Year &&
                                       deposit.Date.Month == currentDashboard.Date.Month &&
                                       deposit.Date.Hour == currentDashboard.Date.Hour);
 
