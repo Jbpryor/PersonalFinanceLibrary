@@ -7,6 +7,7 @@ namespace P_Finance.Core
     {
         private static DashboardModel dashboard;
         private static BillsModel bills;
+        private static PurchasePowerModel purchasePower;
 
         public static async Task InitializeData()
         {
@@ -26,30 +27,40 @@ namespace P_Finance.Core
 
         public static async Task HandleDeposit(DepositModel deposit)
         {
+            purchasePower = new PurchasePowerModel();
+
             if (deposit.CategoryId == 1)
             {
                 dashboard.TotalBalance += deposit.Amount;
+                purchasePower.Amount = deposit.Amount;
+
             }
             if (deposit.CategoryId == 2)
             {
                 dashboard.TotalBalance += HandlePaycheckDeposit(deposit.Amount);
+                purchasePower.Amount = HandlePaycheckDeposit(deposit.Amount);
                 dashboard.GasBalance = 100;
                 dashboard.GroceriesBalance = 125;
             }
             if (deposit.CategoryId == 3)
             {
                 dashboard.TotalBalance += HandleBonusDeposit(deposit.Amount);
+                purchasePower.Amount = HandleBonusDeposit(deposit.Amount);
+
             }
             // Extra Paycheck (3 in a month)
             if (deposit.CategoryId == 4)
             {
                 dashboard.TotalBalance += HandlePaycheckDeposit(deposit.Amount) + bills.BillsTotal;
+                purchasePower.Amount = HandlePaycheckDeposit(deposit.Amount) + bills.BillsTotal;
+
                 dashboard.GasBalance = 100;
                 dashboard.GroceriesBalance = 125;
             }
             if (deposit.CategoryId == 5)
             {
                 dashboard.TotalBalance += deposit.Amount;
+                purchasePower.Amount = deposit.Amount;
             }
 
             decimal HandlePaycheckDeposit(decimal checkAmount)
@@ -85,14 +96,11 @@ namespace P_Finance.Core
                 return roundedValue;
             }
 
-            //decimal HandleExtraCheckDeposit(decimal extraCheckAmount)
-            //{
-            //    return extraCheckAmount - (bills.AmountFromCheck - bills.BillsTotal) + (100 - dashboard.GasBalance) + dashboard.GroceriesBalance;
-            //}
-
             dashboard.Date = DateTime.Now;
+            purchasePower.FromId = deposit.Id;
 
             await GlobalConfig.Connection!.CreateDashboard(dashboard);
+            await GlobalConfig.Connection!.CreatePurchasePower(purchasePower);
         }
 
         public static async Task HandlePurchase(PurchaseModel purchase)

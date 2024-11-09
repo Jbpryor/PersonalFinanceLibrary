@@ -111,7 +111,22 @@ namespace P_Finance.Core.DataAccess
             await connection.ExecuteAsync("dbo.spLedger_Insert", ledger, commandType: CommandType.StoredProcedure);
 
             model.Id = ledger.Get<int>("@id");
+        }
+        
+        public async Task CreatePurchasePower(PurchasePowerModel model)
+        {
+            using IDbConnection connection = OpenConnection();
 
+            var purchasePower = new DynamicParameters();
+
+            purchasePower.Add("@Date", DateTime.Now);
+            purchasePower.Add("@Amount", model.Amount);
+            purchasePower.Add("@FromId", model.FromId);
+            purchasePower.Add("@id", 0, DbType.Int32, direction: ParameterDirection.Output);
+
+            await connection.ExecuteAsync("dbo.spPurchasePowers_Insert", purchasePower, commandType: CommandType.StoredProcedure);
+
+            model.Id = purchasePower.Get<int>("@id");
         }
 
         public async Task<List<CreditCardModel>> CreditCards_GetAll()
